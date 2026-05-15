@@ -119,9 +119,15 @@ export default function SignupForm() {
 
       {status === "success" ? (
         <div className="py-8 text-center">
-          <p className="text-lg font-medium text-emerald-600">You&apos;re on the board!</p>
-          <p className="mt-1 text-sm text-zinc-500">
-            Your profile is live. We&apos;ll reach out when there&apos;s a match.
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 text-xl">
+            ✓
+          </div>
+          <p className="text-lg font-semibold text-zinc-900">Thanks for submitting!</p>
+          <p className="mt-2 text-sm text-zinc-600">
+            We sent a confirmation email to your inbox — please click the link to verify your address.
+          </p>
+          <p className="mt-3 text-sm text-zinc-500">
+            Once you confirm, your profile will be reviewed by our team. As soon as it&apos;s approved it will go live on the board, and we&apos;ll reach out when there&apos;s a match.
           </p>
         </div>
       ) : (
