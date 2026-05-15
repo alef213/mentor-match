@@ -130,7 +130,10 @@ export async function createMatchRequest(fields: {
   target_id: string;
   requester_name: string;
   requester_email: string;
-  message?: string;
+  requester_industry: string;
+  requester_role: string;
+  requester_bio?: string;
+  requester_photo?: string;
 }): Promise<void> {
   const res = await fetch(`${BASE}/${encodeURIComponent("Match Requests")}`, {
     method: "POST",
@@ -140,7 +143,10 @@ export async function createMatchRequest(fields: {
         "Target ID": fields.target_id,
         "Requester Name": fields.requester_name,
         "Requester Email": fields.requester_email,
-        Message: fields.message ?? "",
+        "Requester Industry": fields.requester_industry,
+        "Requester Role": fields.requester_role,
+        "Requester Bio": fields.requester_bio ?? "",
+        "Requester Photo": fields.requester_photo ?? "",
         Status: "pending",
       },
     }),
