@@ -13,10 +13,14 @@ export async function POST(request: Request) {
   if (file.size > 5 * 1024 * 1024)
     return Response.json({ error: "File must be under 5MB." }, { status: 400 });
 
-  const ext = file.name.split(".").pop() ?? "jpg";
-  const blob = await put(`profiles/${Date.now()}.${ext}`, file, {
-    access: "public",
-  });
-
-  return Response.json({ url: blob.url });
+  try {
+    const ext = file.name.split(".").pop() ?? "jpg";
+    const blob = await put(`profiles/${Date.now()}.${ext}`, file, {
+      access: "public",
+    });
+    return Response.json({ url: blob.url });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Upload failed";
+    return Response.json({ error: message }, { status: 500 });
+  }
 }

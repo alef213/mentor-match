@@ -55,16 +55,22 @@ export default function SignupForm() {
 
     let photoUrl: string | undefined;
     if (photo) {
-      const form = new FormData();
-      form.append("file", photo);
-      const uploadRes = await fetch("/api/upload", { method: "POST", body: form });
-      const uploadData = await uploadRes.json();
-      if (!uploadRes.ok) {
+      try {
+        const form = new FormData();
+        form.append("file", photo);
+        const uploadRes = await fetch("/api/upload", { method: "POST", body: form });
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) {
+          setStatus("error");
+          setErrorMsg(uploadData.error ?? "Photo upload failed.");
+          return;
+        }
+        photoUrl = uploadData.url;
+      } catch {
         setStatus("error");
-        setErrorMsg(uploadData.error ?? "Photo upload failed.");
+        setErrorMsg("Photo upload failed. Please try again.");
         return;
       }
-      photoUrl = uploadData.url;
     }
 
     const res = await fetch("/api/signup", {
