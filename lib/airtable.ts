@@ -25,6 +25,15 @@ function toProfile(record: { id: string; createdTime: string; fields: Record<str
   };
 }
 
+async function updateProfile(id: string, fields: Record<string, unknown>): Promise<void> {
+  const res = await fetch(`${BASE}/Profiles/${id}`, {
+    method: "PATCH",
+    headers: airtableHeaders(),
+    body: JSON.stringify({ fields }),
+  });
+  if (!res.ok) throw new Error(await res.text());
+}
+
 export async function getActiveProfiles(): Promise<Profile[]> {
   const params = new URLSearchParams({
     filterByFormula: "{Active}=1",
@@ -46,6 +55,7 @@ export async function createProfile(fields: {
   role: string;
   bio?: string;
   photo?: string;
+  confirmToken: string;
 }): Promise<{ id: string }> {
   const res = await fetch(`${BASE}/Profiles`, {
     method: "POST",
@@ -59,13 +69,52 @@ export async function createProfile(fields: {
         Role: fields.role,
         Bio: fields.bio ?? "",
         Photo: fields.photo ?? "",
-        Active: true,
+        Active: false,
+        "Email Confirmed": false,
+        "Admin Approved": false,
+        "Confirm Token": fields.confirmToken,
       },
     }),
   });
   if (!res.ok) throw new Error(await res.text());
   const record = await res.json();
   return { id: record.id };
+}
+
+export async function confirmEmail(token: string): Promise<{ id: string } | null> {
+  const params = new URLSearchParams({
+    filterByFormula: `{Confirm Token}="${token}"`,
+    maxRecords: "1",
+  });
+  const res = await fetch(`${BASE}/Profiles?${params}`, { headers: airtableHeaders() });
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (!data.records?.length) return null;
+
+  const record = data.records[0];
+  const adminApproved = (record.fields["Admin Approved"] as boolean) ?? false;
+
+  await updateProfile(record.id, {
+    "Email Confirmed": true,
+    "Confirm Token": "",
+    ...(adminApproved ? { Active: true } : {}),
+  });
+
+  return { id: record.id };
+}
+
+export async function approveProfile(id: string): Promise<boolean> {
+  const res = await fetch(`${BASE}/Profiles/${id}`, { headers: airtableHeaders() });
+  if (!res.ok) return false;
+  const record = await res.json();
+  const emailConfirmed = (record.fields["Email Confirmed"] as boolean) ?? false;
+
+  await updateProfile(id, {
+    "Admin Approved": true,
+    ...(emailConfirmed ? { Active: true } : {}),
+  });
+
+  return true;
 }
 
 export async function getProfileById(id: string): Promise<Profile | null> {
