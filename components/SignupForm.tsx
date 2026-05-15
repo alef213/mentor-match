@@ -123,12 +123,6 @@ export default function SignupForm() {
           <p className="mt-1 text-sm text-zinc-500">
             Your profile is live. We&apos;ll reach out when there&apos;s a match.
           </p>
-          <button
-            onClick={() => { reset(); }}
-            className="mt-5 rounded-lg border border-zinc-200 px-5 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
-          >
-            Submit another
-          </button>
         </div>
       ) : (
         <form onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }} className="flex flex-col gap-4">
