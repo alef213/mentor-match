@@ -1,14 +1,20 @@
+import { NextRequest, NextResponse } from "next/server";
 import { confirmEmail } from "@/lib/airtable";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
-  const token = searchParams.get("token");
+export async function GET(request: NextRequest) {
+  const token = request.nextUrl.searchParams.get("token");
+  const base = process.env.NEXT_PUBLIC_SITE_URL!;
 
-  if (!token)
-    return Response.redirect(`${origin}/confirmed?status=invalid`);
+  try {
+    if (!token)
+      return NextResponse.redirect(`${base}/confirmed?status=invalid`);
 
-  const result = await confirmEmail(token);
-  return Response.redirect(`${origin}/confirmed?status=${result ? "ok" : "invalid"}`);
+    const result = await confirmEmail(token);
+    return NextResponse.redirect(`${base}/confirmed?status=${result ? "ok" : "invalid"}`);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }
