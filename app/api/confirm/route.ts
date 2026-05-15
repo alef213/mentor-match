@@ -1,12 +1,12 @@
 import { confirmEmail } from "@/lib/airtable";
-import { redirect } from "next/navigation";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+  const { searchParams, origin } = new URL(request.url);
   const token = searchParams.get("token");
 
-  if (!token) redirect("/confirmed?status=invalid");
+  if (!token)
+    return Response.redirect(`${origin}/confirmed?status=invalid`);
 
   const result = await confirmEmail(token);
-  redirect(result ? "/confirmed?status=ok" : "/confirmed?status=invalid");
+  return Response.redirect(`${origin}/confirmed?status=${result ? "ok" : "invalid"}`);
 }
