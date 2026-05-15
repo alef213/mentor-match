@@ -1,14 +1,15 @@
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { getActiveProfiles } from "@/lib/airtable";
 import Board from "@/components/Board";
 import { Profile } from "@/components/Card";
 
 export default async function Home() {
-  const { data: profiles } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("is_active", true)
-    .order("created_at", { ascending: false });
+  let profiles: Profile[] = [];
+  try {
+    profiles = await getActiveProfiles();
+  } catch {
+    // Airtable not configured yet — board will show empty state
+  }
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -28,7 +29,7 @@ export default async function Home() {
       </header>
 
       <main className="mx-auto max-w-5xl px-4 py-10">
-        {!profiles || profiles.length === 0 ? (
+        {profiles.length === 0 ? (
           <div className="py-24 text-center">
             <p className="text-zinc-500">No profiles yet. Be the first to join!</p>
             <Link
@@ -39,7 +40,7 @@ export default async function Home() {
             </Link>
           </div>
         ) : (
-          <Board profiles={profiles as Profile[]} />
+          <Board profiles={profiles} />
         )}
       </main>
     </div>

@@ -1,0 +1,97 @@
+import { Profile } from "@/components/Card";
+
+const BASE = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}`;
+
+function airtableHeaders() {
+  return {
+    Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+    "Content-Type": "application/json",
+  };
+}
+
+function toProfile(record: { id: string; createdTime: string; fields: Record<string, unknown> }): Profile {
+  const f = record.fields;
+  return {
+    id: record.id,
+    created_at: record.createdTime,
+    type: f["Type"] as "mentor" | "mentee",
+    name: f["Name"] as string,
+    email: f["Email"] as string,
+    industry: f["Industry"] as string,
+    role: f["Role"] as string,
+    bio: (f["Bio"] as string) ?? null,
+    is_active: (f["Active"] as boolean) ?? false,
+  };
+}
+
+export async function getActiveProfiles(): Promise<Profile[]> {
+  const params = new URLSearchParams({
+    filterByFormula: "{Active}=1",
+  });
+  const res = await fetch(`${BASE}/Profiles?${params}`, {
+    headers: airtableHeaders(),
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const data = await res.json();
+  return (data.records ?? []).map(toProfile);
+}
+
+export async function createProfile(fields: {
+  type: "mentor" | "mentee";
+  name: string;
+  email: string;
+  industry: string;
+  role: string;
+  bio?: string;
+}): Promise<{ id: string }> {
+  const res = await fetch(`${BASE}/Profiles`, {
+    method: "POST",
+    headers: airtableHeaders(),
+    body: JSON.stringify({
+      fields: {
+        Name: fields.name,
+        Email: fields.email,
+        Type: fields.type,
+        Industry: fields.industry,
+        Role: fields.role,
+        Bio: fields.bio ?? "",
+        Active: true,
+      },
+    }),
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const record = await res.json();
+  return { id: record.id };
+}
+
+export async function getProfileById(id: string): Promise<Profile | null> {
+  const res = await fetch(`${BASE}/Profiles/${id}`, {
+    headers: airtableHeaders(),
+  });
+  if (!res.ok) return null;
+  const record = await res.json();
+  return toProfile(record);
+}
+
+export async function createMatchRequest(fields: {
+  target_id: string;
+  requester_name: string;
+  requester_email: string;
+  message?: string;
+}): Promise<void> {
+  const res = await fetch(`${BASE}/${encodeURIComponent("Match Requests")}`, {
+    method: "POST",
+    headers: airtableHeaders(),
+    body: JSON.stringify({
+      fields: {
+        "Target ID": fields.target_id,
+        "Requester Name": fields.requester_name,
+        "Requester Email": fields.requester_email,
+        Message: fields.message ?? "",
+        Status: "pending",
+      },
+    }),
+  });
+  if (!res.ok) throw new Error(await res.text());
+}

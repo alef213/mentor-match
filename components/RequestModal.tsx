@@ -19,8 +19,7 @@ export default function RequestModal({ target, onClose }: Props) {
 
   if (!target) return null;
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSubmit() {
     setStatus("loading");
 
     const res = await fetch("/api/request", {
@@ -91,7 +90,7 @@ export default function RequestModal({ target, onClose }: Props) {
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }} className="flex flex-col gap-4">
             {/* Honeypot — hidden via CSS, not display:none */}
             <input
               ref={honeypotRef}

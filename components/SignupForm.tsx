@@ -40,8 +40,7 @@ export default function SignupForm() {
     setErrorMsg("");
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSubmit() {
     setStatus("loading");
 
     const res = await fetch("/api/signup", {
@@ -101,7 +100,7 @@ export default function SignupForm() {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }} className="flex flex-col gap-4">
           {/* Honeypot — hidden via CSS, not display:none */}
           <input
             ref={honeypotRef}
@@ -119,7 +118,7 @@ export default function SignupForm() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -130,7 +129,7 @@ export default function SignupForm() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -140,7 +139,7 @@ export default function SignupForm() {
               required
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">Select industry…</option>
               {INDUSTRIES.map((ind) => (
@@ -157,7 +156,7 @@ export default function SignupForm() {
               value={role}
               onChange={(e) => setRole(e.target.value)}
               placeholder="e.g. Senior Product Manager"
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -174,7 +173,7 @@ export default function SignupForm() {
                   ? "What can you help with? Any specialties?"
                   : "What are you looking for in a mentor?"
               }
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
