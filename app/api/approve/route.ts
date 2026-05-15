@@ -1,5 +1,7 @@
 import { approveProfile } from "@/lib/airtable";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const id = searchParams.get("id");
