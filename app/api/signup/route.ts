@@ -18,8 +18,8 @@ export async function POST(request: Request) {
     const { id } = await createProfile({ type, name, email, industry, role, bio, photo, confirmToken });
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
-    const confirmLink = `${siteUrl}/api/email-confirm?token=${confirmToken}`;
-    const approveLink = `${siteUrl}/api/admin-approve?id=${id}&secret=${process.env.ADMIN_SECRET}`;
+    const confirmLink = `${siteUrl}/confirm?token=${confirmToken}`;
+    const approveLink = `${siteUrl}/approve?id=${id}&secret=${process.env.ADMIN_SECRET}`;
 
     await resend.emails.send({
       from: "MentorMatch <onboarding@resend.dev>",
