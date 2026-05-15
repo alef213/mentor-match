@@ -25,6 +25,8 @@ export default function SignupForm() {
   const [role, setRole] = useState("");
   const [bio, setBio] = useState("");
   const [consent, setConsent] = useState(false);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const honeypotRef = useRef<HTMLInputElement>(null);
@@ -36,12 +38,34 @@ export default function SignupForm() {
     setRole("");
     setBio("");
     setConsent(false);
+    setPhoto(null);
+    setPhotoPreview(null);
     setStatus("idle");
     setErrorMsg("");
   }
 
+  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null;
+    setPhoto(file);
+    setPhotoPreview(file ? URL.createObjectURL(file) : null);
+  }
+
   async function handleSubmit() {
     setStatus("loading");
+
+    let photoUrl: string | undefined;
+    if (photo) {
+      const form = new FormData();
+      form.append("file", photo);
+      const uploadRes = await fetch("/api/upload", { method: "POST", body: form });
+      const uploadData = await uploadRes.json();
+      if (!uploadRes.ok) {
+        setStatus("error");
+        setErrorMsg(uploadData.error ?? "Photo upload failed.");
+        return;
+      }
+      photoUrl = uploadData.url;
+    }
 
     const res = await fetch("/api/signup", {
       method: "POST",
@@ -53,6 +77,7 @@ export default function SignupForm() {
         industry,
         role,
         bio,
+        photo: photoUrl,
         consent,
         honeypot: honeypotRef.current?.value ?? "",
       }),
@@ -175,6 +200,39 @@ export default function SignupForm() {
               }
               className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-zinc-700">
+              Profile photo <span className="text-zinc-400">(optional)</span>
+            </label>
+            <div className="flex items-center gap-4">
+              {photoPreview ? (
+                <img src={photoPreview} alt="Preview" className="h-14 w-14 rounded-full object-cover" />
+              ) : (
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-zinc-100 text-zinc-400 text-xs">
+                  No photo
+                </div>
+              )}
+              <label className="cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50">
+                {photoPreview ? "Change" : "Upload photo"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className="hidden"
+                />
+              </label>
+              {photoPreview && (
+                <button
+                  type="button"
+                  onClick={() => { setPhoto(null); setPhotoPreview(null); }}
+                  className="text-sm text-zinc-400 hover:text-zinc-600"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
           </div>
 
           <label className="flex items-start gap-2 text-sm text-zinc-700">

@@ -8,6 +8,7 @@ export type Profile = {
   industry: string;
   role: string;
   bio: string | null;
+  photo: string | null;
   is_active: boolean;
   created_at: string;
 };
@@ -33,9 +34,17 @@ export default function Card({ profile, onRequestMatch }: Props) {
   return (
     <div className="flex flex-col gap-4 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
       <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700">
-          {initials(profile.name)}
-        </div>
+        {profile.photo ? (
+          <img
+            src={profile.photo}
+            alt={profile.name}
+            className="h-12 w-12 shrink-0 rounded-full object-cover"
+          />
+        ) : (
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700">
+            {initials(profile.name)}
+          </div>
+        )}
         <div className="min-w-0">
           <p className="truncate font-semibold text-zinc-900">{profile.name}</p>
           <p className="truncate text-sm text-zinc-500">{profile.role}</p>

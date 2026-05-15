@@ -20,6 +20,7 @@ function toProfile(record: { id: string; createdTime: string; fields: Record<str
     industry: f["Industry"] as string,
     role: f["Role"] as string,
     bio: (f["Bio"] as string) ?? null,
+    photo: (f["Photo"] as string) || null,
     is_active: (f["Active"] as boolean) ?? false,
   };
 }
@@ -44,6 +45,7 @@ export async function createProfile(fields: {
   industry: string;
   role: string;
   bio?: string;
+  photo?: string;
 }): Promise<{ id: string }> {
   const res = await fetch(`${BASE}/Profiles`, {
     method: "POST",
@@ -56,6 +58,7 @@ export async function createProfile(fields: {
         Industry: fields.industry,
         Role: fields.role,
         Bio: fields.bio ?? "",
+        Photo: fields.photo ?? "",
         Active: true,
       },
     }),
