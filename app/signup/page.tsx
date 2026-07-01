@@ -6,7 +6,7 @@ export default function SignupPage() {
     <div className="min-h-screen bg-black">
       <Link
         href="/"
-        className="fixed left-5 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 rounded-full bg-[#60b09c] px-4 py-2 text-sm font-medium text-white hover:bg-[#4d9b86] transition-colors"
+        className="fixed left-5 top-20 z-50 flex items-center gap-2 rounded-full bg-[#60b09c] px-4 py-2 text-sm font-medium text-white hover:bg-[#4d9b86] transition-colors"
       >
         ← Back
       </Link>

@@ -27,6 +27,13 @@ export async function POST(request: Request) {
       text: `Requester: ${requester_name} (${requester_email})\nIndustry: ${requester_industry}\nRole: ${requester_role}\nAbout: ${requester_bio || "—"}\nPhoto: ${requester_photo || "none"}\n\nTarget: ${target.name} (${target.email}) — ${target.type}, ${target.industry}\n\nAction: Reply to both parties to make the intro.`,
     });
 
+    await resend.emails.send({
+      from: "Venture Cafe Phoenix Mentorship Network <onboarding@resend.dev>",
+      to: requester_email,
+      subject: `We received your request to connect with ${target.name}`,
+      text: `Hi ${requester_name},\n\nWe've received your request to connect with ${target.name} and we're on it.\n\nOur team will review your request and be in touch within 7 days to facilitate the introduction.\n\nThanks for being part of the Venture Cafe Phoenix Mentorship Network.\n\nThe VCP Mentorship Team`,
+    });
+
     return Response.json({ success: true });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Unknown error";

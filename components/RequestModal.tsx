@@ -123,9 +123,9 @@ export default function RequestModal({ target, onClose }: Props) {
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#60b09c]/20 text-[#60b09c] text-xl">
               ✓
             </div>
-            <p className="text-lg font-semibold text-white">Request sent!</p>
+            <p className="text-lg font-semibold text-white">Request received!</p>
             <p className="mt-2 text-sm text-white/60">
-              Thank you — you&apos;ll hear from us within 7 days.
+              We&apos;ve sent a confirmation to your email. Our team will review your request and be in touch within 7 days to make the introduction.
             </p>
             <button
               onClick={handleClose}
