@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VentureCafe Phoenix Mentorship Network",
+  title: "Venture Cafe Phoenix Mentorship Network",
   description: "Find your mentor or mentee",
 };
 

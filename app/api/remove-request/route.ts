@@ -16,10 +16,10 @@ export async function POST(request: Request) {
       const removeLink = `${siteUrl}/remove?token=${token}`;
 
       await resend.emails.send({
-        from: "VentureCafe Phoenix Mentorship Network <onboarding@resend.dev>",
+        from: "Venture Cafe Phoenix Mentorship Network <onboarding@resend.dev>",
         to: email,
-        subject: "Confirm your removal from VentureCafe Phoenix Mentorship Network",
-        text: `Hi ${profile.name},\n\nWe received a request to remove your listing from the VentureCafe Phoenix Mentorship Network board.\n\nIf this was you, click the link below to confirm:\n\n${removeLink}\n\nIf you didn't request this, you can ignore this email — nothing will change.`,
+        subject: "Confirm your removal from Venture Cafe Phoenix Mentorship Network",
+        text: `Hi ${profile.name},\n\nWe received a request to remove your listing from the Venture Cafe Phoenix Mentorship Network board.\n\nIf this was you, click the link below to confirm:\n\n${removeLink}\n\nIf you didn't request this, you can ignore this email — nothing will change.`,
       });
     }
 

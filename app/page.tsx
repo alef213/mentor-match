@@ -6,7 +6,7 @@ import RemoveSection from "@/components/RemoveSection";
 import { Profile } from "@/components/Card";
 
 const MOCK_PROFILES: Profile[] = [
-  { id: "1", type: "mentor", name: "Sarah Chen", email: "sarah@example.com", industry: "Technology", role: "Senior Software Engineer", bio: "10 years in backend engineering across fintech and SaaS. I specialise in distributed systems and API design. I love helping early-career devs build solid foundations, navigate their first senior role, and figure out what kind of engineer they want to become.", linkedin: null, linkedin: null, photo: null, is_active: true, created_at: "" },
+  { id: "1", type: "mentor", name: "Sarah Chen", email: "sarah@example.com", industry: "Technology", role: "Senior Software Engineer", bio: "10 years in backend engineering across fintech and SaaS. I specialise in distributed systems and API design. I love helping early-career devs build solid foundations, navigate their first senior role, and figure out what kind of engineer they want to become.", linkedin: null, photo: null, is_active: true, created_at: "" },
   { id: "2", type: "mentor", name: "James Okafor", email: "james@example.com", industry: "Finance", role: "Investment Analyst", bio: "Spent six years across two hedge funds and an early-stage startup. I can help with breaking into finance, understanding what different roles actually look like day-to-day, and thinking through the move from sell-side to buy-side. Happy to talk honestly about the industry.", linkedin: null, photo: null, is_active: true, created_at: "" },
   { id: "3", type: "mentor", name: "Priya Nair", email: "priya@example.com", industry: "Healthcare", role: "Product Manager", bio: "Building healthcare products for 8 years. Passionate about mentoring PMs.", linkedin: null, photo: null, is_active: true, created_at: "" },
   { id: "4", type: "mentor", name: "David Kim", email: "david@example.com", industry: "Marketing", role: "Brand Strategist", bio: "Built brand strategies for Fortune 500s. Happy to help you break into marketing.", linkedin: null, photo: null, is_active: true, created_at: "" },
@@ -33,8 +33,8 @@ export default async function Home() {
       <header className="border-b border-white/10 bg-[#242424]">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <div>
-            <h1 className="text-xl font-bold text-white">VentureCafe Phoenix Mentorship Network</h1>
-            <p className="text-sm text-white/60">Find Your Mentor Or Mentee</p>
+            <h1 className="text-xl font-bold text-white">Venture Cafe Phoenix Mentorship Network</h1>
+            <p className="text-sm text-[#60b09c]">Find Your Mentor Or Mentee</p>
           </div>
           <Link
             href="/signup"

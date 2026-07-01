@@ -7,7 +7,7 @@ export default function SignupPage() {
       <header className="border-b border-white/10 bg-[#242424]">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <Link href="/" className="text-xl font-bold text-white">
-            VentureCafe Phoenix Mentorship Network
+            Venture Cafe Phoenix Mentorship Network
           </Link>
           <Link href="/" className="text-sm text-white/60 hover:text-white">
             ← Back to the Board
