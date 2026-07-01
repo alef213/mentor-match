@@ -4,14 +4,15 @@ import SignupForm from "@/components/SignupForm";
 export default function SignupPage() {
   return (
     <div className="min-h-screen bg-black">
+      <Link
+        href="/"
+        className="fixed left-5 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 rounded-full bg-[#242424] border border-white/10 px-4 py-2 text-sm text-white/60 hover:text-white hover:border-white/30 transition-colors"
+      >
+        ← Back
+      </Link>
       <header className="border-b border-white/10 bg-[#242424]">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-          <Link href="/" className="text-xl font-bold text-white">
-            Venture Cafe Phoenix Mentorship Network
-          </Link>
-          <Link href="/" className="text-sm text-white/60 hover:text-white">
-            ← Back to the Board
-          </Link>
+        <div className="mx-auto flex max-w-5xl items-center px-4 py-4">
+          <span className="text-xl font-bold text-white">Venture Cafe Phoenix Mentorship Network</span>
         </div>
       </header>
 

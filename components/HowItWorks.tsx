@@ -17,14 +17,14 @@ const STEPS = [
   {
     number: "4",
     title: "We Make the Intro",
-    description: "If it's a match, we'll connect you both by email within 7 days and let the relationship grow from there.",
+    description: "If it's a strong fit, we'll facilitate the introduction by email within 7 days so you can begin building a productive mentorship.",
   },
 ];
 
 export default function HowItWorks() {
   return (
     <div className="mb-10">
-      <h2 className="mb-6 text-center text-sm font-semibold uppercase tracking-widest text-white/40">
+      <h2 className="mb-6 text-center text-sm font-semibold uppercase tracking-widest text-[#e4801c]">
         How It Works
       </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

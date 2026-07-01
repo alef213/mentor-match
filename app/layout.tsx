@@ -36,7 +36,7 @@ export default function RootLayout({
               href="https://www.thinklaunchiq.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white/50 transition-colors"
+              className="text-[#e4801c] hover:text-[#c96d15] transition-colors"
             >
               ThinkLaunchIQ
             </a>
@@ -45,7 +45,7 @@ export default function RootLayout({
               href="https://resolutionresourcegroup.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white/50 transition-colors"
+              className="text-[#e4801c] hover:text-[#c96d15] transition-colors"
             >
               Resolution Resource Group
             </a>

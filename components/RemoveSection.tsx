@@ -29,7 +29,7 @@ export default function RemoveSection() {
 
   return (
     <div className="mt-20 border-t border-white/10 pt-10 pb-16 text-center">
-      <p className="text-sm font-medium text-white/70">Want to remove your listing?</p>
+      <p className="text-sm font-medium text-[#e4801c]">Want to remove your listing?</p>
       <p className="mt-1 text-sm text-white/40">
         Enter your name and email and we&apos;ll send you a confirmation link.
       </p>
