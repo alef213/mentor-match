@@ -62,7 +62,7 @@ export default function RemoveSection() {
           <button
             type="submit"
             disabled={status === "loading"}
-            className="rounded-lg border border-white/20 bg-transparent px-4 py-2 text-sm font-medium text-white/60 hover:bg-white/5 disabled:opacity-60"
+            className="rounded-lg bg-[#60b09c] px-4 py-2 text-sm font-medium text-white hover:bg-[#4d9b86] disabled:opacity-60"
           >
             {status === "loading" ? "Sending…" : "Send Confirmation Email"}
           </button>
@@ -70,7 +70,7 @@ export default function RemoveSection() {
       )}
 
       <div className="mt-16 border-t border-white/10 pt-10">
-        <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-white/30">
+        <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-[#e4801c]">
           Brought to you by
         </p>
         <div className="flex flex-wrap items-center justify-center gap-10">
@@ -78,14 +78,14 @@ export default function RemoveSection() {
             <img
               src="/venturecafe-logo.png"
               alt="Venture Café Phoenix"
-              className="h-12 object-contain opacity-80 hover:opacity-100 transition-opacity"
+              className="h-20 object-contain opacity-80 hover:opacity-100 transition-opacity"
             />
           </a>
           <a href="https://resolutionresourcegroup.com/" target="_blank" rel="noopener noreferrer">
             <img
               src="/rrg-logo.png"
               alt="Resolution Resource Group LLC"
-              className="h-12 object-contain opacity-80 hover:opacity-100 transition-opacity"
+              className="h-40 object-contain opacity-80 hover:opacity-100 transition-opacity"
             />
           </a>
         </div>

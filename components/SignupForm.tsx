@@ -101,7 +101,7 @@ export default function SignupForm() {
             onClick={() => { setTab(t); reset(); }}
             className={`flex-1 rounded-lg py-2 text-sm font-medium transition-colors ${
               tab === t
-                ? "bg-[#242424] text-white shadow-sm"
+                ? "bg-[#60b09c] text-white shadow-sm"
                 : "text-white/50 hover:text-white/80"
             }`}
           >
