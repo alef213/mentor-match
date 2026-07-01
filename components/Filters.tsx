@@ -11,32 +11,44 @@ type Props = {
   filters: FilterState;
 };
 
+const TABS: { label: string; value: FilterState["type"] }[] = [
+  { label: "Network", value: "all" },
+  { label: "Mentors", value: "mentor" },
+  { label: "Mentees", value: "mentee" },
+];
+
 export default function Filters({ industries, onChange, filters }: Props) {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-col gap-4">
+      <div className="border-b border-white/10">
+        <div className="flex gap-0">
+          {TABS.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => onChange({ ...filters, type: tab.value })}
+              className={`px-5 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
+                filters.type === tab.value
+                  ? "border-[#60b09c] text-[#60b09c]"
+                  : "border-transparent text-white/50 hover:text-white"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <select
         value={filters.industry}
         onChange={(e) => onChange({ ...filters, industry: e.target.value })}
-        className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="w-fit rounded-lg border border-white/20 bg-[#242424] px-3 py-2 text-sm text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#60b09c]"
       >
-        <option value="">All industries</option>
+        <option value="">All Industries</option>
         {industries.map((ind) => (
           <option key={ind} value={ind}>
             {ind}
           </option>
         ))}
-      </select>
-
-      <select
-        value={filters.type}
-        onChange={(e) =>
-          onChange({ ...filters, type: e.target.value as FilterState["type"] })
-        }
-        className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      >
-        <option value="all">Mentors &amp; mentees</option>
-        <option value="mentor">Mentors only</option>
-        <option value="mentee">Mentees only</option>
       </select>
     </div>
   );

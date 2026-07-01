@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     await createMatchRequest({ target_id, requester_name, requester_email, requester_industry, requester_role, requester_bio, requester_photo });
 
     await resend.emails.send({
-      from: "MentorMatch <onboarding@resend.dev>",
+      from: "VentureCafe Phoenix Mentorship Network <onboarding@resend.dev>",
       to: process.env.ADMIN_EMAIL!,
       subject: `Match request: ${requester_name} → ${target.name}`,
       text: `Requester: ${requester_name} (${requester_email})\nIndustry: ${requester_industry}\nRole: ${requester_role}\nAbout: ${requester_bio || "—"}\nPhoto: ${requester_photo || "none"}\n\nTarget: ${target.name} (${target.email}) — ${target.type}, ${target.industry}\n\nAction: Reply to both parties to make the intro.`,

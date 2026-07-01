@@ -1,21 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { INDUSTRIES } from "@/lib/constants";
 
 type Tab = "mentee" | "mentor";
 
-const INDUSTRIES = [
-  "Technology",
-  "Finance",
-  "Healthcare",
-  "Education",
-  "Marketing",
-  "Design",
-  "Legal",
-  "Operations",
-  "Sales",
-  "Other",
-];
+const inputCls = "w-full rounded-lg border border-white/20 bg-black px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#60b09c]";
 
 export default function SignupForm() {
   const [tab, setTab] = useState<Tab>("mentee");
@@ -24,6 +14,7 @@ export default function SignupForm() {
   const [industry, setIndustry] = useState("");
   const [role, setRole] = useState("");
   const [bio, setBio] = useState("");
+  const [linkedin, setLinkedin] = useState("");
   const [consent, setConsent] = useState(false);
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -37,6 +28,7 @@ export default function SignupForm() {
     setIndustry("");
     setRole("");
     setBio("");
+    setLinkedin("");
     setConsent(false);
     setPhoto(null);
     setPhotoPreview(null);
@@ -83,6 +75,7 @@ export default function SignupForm() {
         industry,
         role,
         bio,
+        linkedin,
         photo: photoUrl,
         consent,
         honeypot: honeypotRef.current?.value ?? "",
@@ -99,40 +92,39 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#242424] p-6">
       {/* Tabs */}
-      <div className="mb-6 flex rounded-xl bg-zinc-100 p-1">
+      <div className="mb-6 flex rounded-xl bg-black p-1">
         {(["mentee", "mentor"] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => { setTab(t); reset(); }}
             className={`flex-1 rounded-lg py-2 text-sm font-medium transition-colors ${
               tab === t
-                ? "bg-white text-zinc-900 shadow-sm"
-                : "text-zinc-500 hover:text-zinc-700"
+                ? "bg-[#242424] text-white shadow-sm"
+                : "text-white/50 hover:text-white/80"
             }`}
           >
-            {t === "mentee" ? "I want a mentor" : "I am a mentor"}
+            {t === "mentee" ? "I want a Mentor" : "I am a Mentor"}
           </button>
         ))}
       </div>
 
       {status === "success" ? (
         <div className="py-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 text-xl">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#60b09c]/20 text-[#60b09c] text-xl">
             ✓
           </div>
-          <p className="text-lg font-semibold text-zinc-900">Thanks for submitting!</p>
-          <p className="mt-2 text-sm text-zinc-600">
+          <p className="text-lg font-semibold text-white">Thanks for submitting!</p>
+          <p className="mt-2 text-sm text-white/60">
             We sent a confirmation email to your inbox — please click the link to verify your address.
           </p>
-          <p className="mt-3 text-sm text-zinc-500">
+          <p className="mt-3 text-sm text-white/40">
             Once you confirm, your profile will be reviewed by our team. As soon as it&apos;s approved it will go live on the board, and we&apos;ll reach out when there&apos;s a match.
           </p>
         </div>
       ) : (
         <form onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }} className="flex flex-col gap-4">
-          {/* Honeypot — hidden via CSS, not display:none */}
           <input
             ref={honeypotRef}
             name="website"
@@ -143,34 +135,22 @@ export default function SignupForm() {
           />
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-zinc-700">Name</label>
-            <input
-              required
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+            <label className="mb-1 block text-sm font-medium text-white/80">Name</label>
+            <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-zinc-700">Email</label>
-            <input
-              required
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+            <label className="mb-1 block text-sm font-medium text-white/80">Email</label>
+            <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-zinc-700">Industry</label>
+            <label className="mb-1 block text-sm font-medium text-white/80">Industry</label>
             <select
               required
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={inputCls}
             >
               <option value="">Select industry…</option>
               {INDUSTRIES.map((ind) => (
@@ -180,23 +160,23 @@ export default function SignupForm() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-zinc-700">Role / title</label>
+            <label className="mb-1 block text-sm font-medium text-white/80">Role / Title</label>
             <input
               required
               type="text"
               value={role}
               onChange={(e) => setRole(e.target.value)}
               placeholder="e.g. Senior Product Manager"
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={inputCls}
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-zinc-700">
-              Bio <span className="text-zinc-400">(optional)</span>
-            </label>
+            <label className="mb-1 block text-sm font-medium text-white/80">Bio</label>
             <textarea
+              required
               rows={3}
+              maxLength={280}
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               placeholder={
@@ -204,36 +184,47 @@ export default function SignupForm() {
                   ? "What can you help with? Any specialties?"
                   : "What are you looking for in a mentor?"
               }
-              className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={inputCls}
+            />
+            <p className={`mt-1 text-right text-xs ${bio.length >= 260 ? "text-[#60b09c]" : "text-white/30"}`}>
+              {bio.length}/280
+            </p>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-white/80">
+              LinkedIn <span className="text-white/30">(optional)</span>
+            </label>
+            <input
+              type="url"
+              value={linkedin}
+              onChange={(e) => setLinkedin(e.target.value)}
+              placeholder="https://linkedin.com/in/yourname"
+              className={inputCls}
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-zinc-700">
-              Profile photo <span className="text-zinc-400">(optional)</span>
+            <label className="mb-1 block text-sm font-medium text-white/80">
+              Profile Photo <span className="text-white/30">(optional)</span>
             </label>
             <div className="flex items-center gap-4">
               {photoPreview ? (
                 <img src={photoPreview} alt="Preview" className="h-14 w-14 rounded-full object-cover" />
               ) : (
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-zinc-100 text-zinc-400 text-xs">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white/30 text-xs">
                   No photo
                 </div>
               )}
-              <label className="cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50">
+              <label className="cursor-pointer rounded-lg border border-white/20 px-3 py-2 text-sm text-white/70 hover:bg-white/5">
                 {photoPreview ? "Change" : "Upload photo"}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePhotoChange}
-                  className="hidden"
-                />
+                <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
               </label>
               {photoPreview && (
                 <button
                   type="button"
                   onClick={() => { setPhoto(null); setPhotoPreview(null); }}
-                  className="text-sm text-zinc-400 hover:text-zinc-600"
+                  className="text-sm text-white/30 hover:text-white/60"
                 >
                   Remove
                 </button>
@@ -241,7 +232,7 @@ export default function SignupForm() {
             </div>
           </div>
 
-          <label className="flex items-start gap-2 text-sm text-zinc-700">
+          <label className="flex items-start gap-2 text-sm text-white/70">
             <input
               type="checkbox"
               checked={consent}
@@ -253,15 +244,15 @@ export default function SignupForm() {
           </label>
 
           {status === "error" && (
-            <p className="text-sm text-red-600">{errorMsg}</p>
+            <p className="text-sm text-red-400">{errorMsg}</p>
           )}
 
           <button
             type="submit"
             disabled={status === "loading"}
-            className="rounded-lg bg-indigo-600 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60"
+            className="rounded-lg bg-[#60b09c] py-2.5 text-sm font-medium text-white hover:bg-[#4d9b86] disabled:opacity-60"
           >
-            {status === "loading" ? "Submitting…" : "Join the board"}
+            {status === "loading" ? "Submitting…" : "Join the Network"}
           </button>
         </form>
       )}

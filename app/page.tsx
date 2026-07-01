@@ -1,29 +1,46 @@
 import Link from "next/link";
 import { getActiveProfiles } from "@/lib/airtable";
 import Board from "@/components/Board";
+import HowItWorks from "@/components/HowItWorks";
+import RemoveSection from "@/components/RemoveSection";
 import { Profile } from "@/components/Card";
+
+const MOCK_PROFILES: Profile[] = [
+  { id: "1", type: "mentor", name: "Sarah Chen", email: "sarah@example.com", industry: "Technology", role: "Senior Software Engineer", bio: "10 years in backend engineering across fintech and SaaS. I specialise in distributed systems and API design. I love helping early-career devs build solid foundations, navigate their first senior role, and figure out what kind of engineer they want to become.", photo: null, is_active: true, created_at: "" },
+  { id: "2", type: "mentor", name: "James Okafor", email: "james@example.com", industry: "Finance", role: "Investment Analyst", bio: "Spent six years across two hedge funds and an early-stage startup. I can help with breaking into finance, understanding what different roles actually look like day-to-day, and thinking through the move from sell-side to buy-side. Happy to talk honestly about the industry.", photo: null, is_active: true, created_at: "" },
+  { id: "3", type: "mentor", name: "Priya Nair", email: "priya@example.com", industry: "Healthcare", role: "Product Manager", bio: "Building healthcare products for 8 years. Passionate about mentoring PMs.", photo: null, is_active: true, created_at: "" },
+  { id: "4", type: "mentor", name: "David Kim", email: "david@example.com", industry: "Marketing", role: "Brand Strategist", bio: "Built brand strategies for Fortune 500s. Happy to help you break into marketing.", photo: null, is_active: true, created_at: "" },
+  { id: "5", type: "mentor", name: "Elena Vasquez", email: "elena@example.com", industry: "Education", role: "Curriculum Designer", bio: "15 years designing learning experiences. Passionate about EdTech and teaching.", photo: null, is_active: true, created_at: "" },
+  { id: "6", type: "mentor", name: "Marcus Webb", email: "marcus@example.com", industry: "Law", role: "Corporate Attorney", bio: "Specialise in startup law and contracts. Happy to guide anyone entering the legal field.", photo: null, is_active: true, created_at: "" },
+  { id: "7", type: "mentee", name: "Luca Rossi", email: "luca@example.com", industry: "Technology", role: "Junior Developer", bio: "Just graduated, looking for guidance on growing as a full-stack engineer.", photo: null, is_active: true, created_at: "" },
+  { id: "8", type: "mentee", name: "Amara Diallo", email: "amara@example.com", industry: "Finance", role: "Analyst Trainee", bio: "Starting out in finance and looking for a mentor who's been through the grind.", photo: null, is_active: true, created_at: "" },
+  { id: "9", type: "mentee", name: "Tom Walsh", email: "tom@example.com", industry: "Healthcare", role: "UX Researcher", bio: "Transitioning into healthcare tech and would love to learn from someone in the space.", photo: null, is_active: true, created_at: "" },
+  { id: "10", type: "mentee", name: "Chloe Martin", email: "chloe@example.com", industry: "Marketing", role: "Social Media Coordinator", bio: "Looking to move from execution into strategy and grow my marketing career.", photo: null, is_active: true, created_at: "" },
+  { id: "11", type: "mentee", name: "Raj Patel", email: "raj@example.com", industry: "Education", role: "Teaching Assistant", bio: "Hoping to transition into EdTech product roles and would love guidance.", photo: null, is_active: true, created_at: "" },
+  { id: "12", type: "mentee", name: "Nadia Bloom", email: "nadia@example.com", industry: "Law", role: "Paralegal", bio: "Studying for the bar. Looking for a mentor who's navigated big law and come out the other side.", photo: null, is_active: true, created_at: "" },
+];
 
 export default async function Home() {
   let profiles: Profile[] = [];
   try {
     profiles = await getActiveProfiles();
   } catch {
-    // Airtable not configured yet — board will show empty state
+    profiles = MOCK_PROFILES;
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <header className="border-b border-zinc-200 bg-white">
+    <div className="min-h-screen bg-black">
+      <header className="border-b border-white/10 bg-[#242424]">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <div>
-            <h1 className="text-xl font-bold text-zinc-900">MentorMatch</h1>
-            <p className="text-sm text-zinc-500">Find your mentor or mentee</p>
+            <h1 className="text-xl font-bold text-white">VentureCafe Phoenix Mentorship Network</h1>
+            <p className="text-sm text-white/60">Find Your Mentor Or Mentee</p>
           </div>
           <Link
             href="/signup"
-            className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+            className="rounded-lg bg-[#60b09c] px-4 py-2 text-sm font-medium text-white hover:bg-[#4d9b86]"
           >
-            Join the board
+            Join the Network
           </Link>
         </div>
       </header>
@@ -31,17 +48,21 @@ export default async function Home() {
       <main className="mx-auto max-w-5xl px-4 py-10">
         {profiles.length === 0 ? (
           <div className="py-24 text-center">
-            <p className="text-zinc-500">No profiles yet. Be the first to join!</p>
+            <p className="text-white/60">No profiles yet. Be the first to join!</p>
             <Link
               href="/signup"
-              className="mt-4 inline-block rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700"
+              className="mt-4 inline-block rounded-lg bg-[#60b09c] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#4d9b86]"
             >
               Sign up →
             </Link>
           </div>
         ) : (
-          <Board profiles={profiles} />
+          <>
+            <HowItWorks />
+            <Board profiles={profiles} />
+          </>
         )}
+        <RemoveSection />
       </main>
     </div>
   );

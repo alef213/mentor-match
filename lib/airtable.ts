@@ -54,6 +54,7 @@ export async function createProfile(fields: {
   industry: string;
   role: string;
   bio?: string;
+  linkedin?: string;
   photo?: string;
   confirmToken: string;
 }): Promise<{ id: string }> {
@@ -68,6 +69,7 @@ export async function createProfile(fields: {
         Industry: fields.industry,
         Role: fields.role,
         Bio: fields.bio ?? "",
+        LinkedIn: fields.linkedin ?? "",
         Photo: fields.photo ?? "",
         Active: false,
         "Email Confirmed": false,
@@ -124,6 +126,39 @@ export async function getProfileById(id: string): Promise<Profile | null> {
   if (!res.ok) return null;
   const record = await res.json();
   return toProfile(record);
+}
+
+export async function requestRemoval(email: string, token: string): Promise<{ name: string } | null> {
+  const params = new URLSearchParams({
+    filterByFormula: `{Email}="${email}"`,
+    maxRecords: "1",
+  });
+  const res = await fetch(`${BASE}/Profiles?${params}`, { headers: airtableHeaders() });
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (!data.records?.length) return null;
+
+  const record = data.records[0];
+  await updateProfile(record.id, { "Remove Token": token });
+  return { name: record.fields["Name"] as string };
+}
+
+export async function processRemoval(token: string): Promise<{ name: string; email: string } | null> {
+  const params = new URLSearchParams({
+    filterByFormula: `{Remove Token}="${token}"`,
+    maxRecords: "1",
+  });
+  const res = await fetch(`${BASE}/Profiles?${params}`, { headers: airtableHeaders() });
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (!data.records?.length) return null;
+
+  const record = data.records[0];
+  await updateProfile(record.id, { "Remove Token": "" });
+  return {
+    name: record.fields["Name"] as string,
+    email: record.fields["Email"] as string,
+  };
 }
 
 export async function createMatchRequest(fields: {

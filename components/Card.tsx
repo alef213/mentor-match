@@ -28,11 +28,11 @@ function initials(name: string) {
 
 export default function Card({ profile, onRequestMatch }: Props) {
   const bio = profile.bio
-    ? profile.bio.slice(0, 100) + (profile.bio.length > 100 ? "…" : "")
+    ? profile.bio.slice(0, 280) + (profile.bio.length > 280 ? "…" : "")
     : null;
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
+    <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#242424] p-5">
       <div className="flex items-start gap-4">
         {profile.photo ? (
           <img
@@ -41,38 +41,38 @@ export default function Card({ profile, onRequestMatch }: Props) {
             className="h-12 w-12 shrink-0 rounded-full object-cover"
           />
         ) : (
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#60b09c]/20 text-sm font-semibold text-[#60b09c]">
             {initials(profile.name)}
           </div>
         )}
         <div className="min-w-0">
-          <p className="truncate font-semibold text-zinc-900">{profile.name}</p>
-          <p className="truncate text-sm text-zinc-500">{profile.role}</p>
+          <p className="truncate font-semibold text-white">{profile.name}</p>
+          <p className="truncate text-sm text-white/60">{profile.role}</p>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <span className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600">
+        <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-xs text-white/70">
           {profile.industry}
         </span>
         <span
           className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
             profile.type === "mentor"
-              ? "bg-emerald-100 text-emerald-700"
-              : "bg-sky-100 text-sky-700"
+              ? "bg-[#60b09c]/20 text-[#60b09c]"
+              : "bg-[#e4801c]/20 text-[#e4801c]"
           }`}
         >
-          {profile.type}
+          {profile.type.charAt(0).toUpperCase() + profile.type.slice(1)}
         </span>
       </div>
 
-      {bio && <p className="text-sm leading-relaxed text-zinc-600">{bio}</p>}
+      {bio && <p className="text-sm leading-relaxed text-white/70">{bio}</p>}
 
       <button
         onClick={() => onRequestMatch(profile.id)}
-        className="mt-auto self-start rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+        className="mt-auto self-start rounded-lg bg-[#60b09c] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#4d9b86]"
       >
-        Request match →
+        Request Match →
       </button>
     </div>
   );

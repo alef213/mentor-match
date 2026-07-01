@@ -2,24 +2,14 @@
 
 import { useRef, useState } from "react";
 import { Profile } from "./Card";
+import { INDUSTRIES } from "@/lib/constants";
 
 type Props = {
   target: Profile | null;
   onClose: () => void;
 };
 
-const INDUSTRIES = [
-  "Technology",
-  "Finance",
-  "Healthcare",
-  "Education",
-  "Marketing",
-  "Design",
-  "Legal",
-  "Operations",
-  "Sales",
-  "Other",
-];
+const inputCls = "w-full rounded-lg border border-white/20 bg-black px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#60b09c]";
 
 export default function RequestModal({ target, onClose }: Props) {
   const [name, setName] = useState("");
@@ -106,21 +96,21 @@ export default function RequestModal({ target, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
       onClick={(e) => e.target === e.currentTarget && handleClose()}
     >
-      <div className="w-full max-w-lg rounded-2xl bg-white shadow-xl flex flex-col max-h-[90vh]">
+      <div className="w-full max-w-lg rounded-2xl bg-[#242424] border border-white/10 shadow-xl flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-start justify-between p-6 pb-4 border-b border-zinc-100">
+        <div className="flex items-start justify-between p-6 pb-4 border-b border-white/10">
           <div>
-            <h2 className="text-lg font-semibold text-zinc-900">Request a match</h2>
-            <p className="text-sm text-zinc-500">
-              Connecting with <span className="font-medium">{target.name}</span> ({target.type})
+            <h2 className="text-lg font-semibold text-white">Request a match</h2>
+            <p className="text-sm text-white/60">
+              Connecting with <span className="font-medium text-white">{target.name}</span> ({target.type})
             </p>
           </div>
           <button
             onClick={handleClose}
-            className="ml-4 text-zinc-400 hover:text-zinc-600"
+            className="ml-4 text-white/40 hover:text-white"
             aria-label="Close"
           >
             ✕
@@ -130,16 +120,16 @@ export default function RequestModal({ target, onClose }: Props) {
         {/* Body */}
         {status === "success" ? (
           <div className="py-10 px-6 text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 text-xl">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#60b09c]/20 text-[#60b09c] text-xl">
               ✓
             </div>
-            <p className="text-lg font-semibold text-zinc-900">Request sent!</p>
-            <p className="mt-2 text-sm text-zinc-500">
-              We&apos;ll review your request and be in touch to make the introduction.
+            <p className="text-lg font-semibold text-white">Request sent!</p>
+            <p className="mt-2 text-sm text-white/60">
+              Thank you — you&apos;ll hear from us within 7 days.
             </p>
             <button
               onClick={handleClose}
-              className="mt-6 rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+              className="mt-6 rounded-lg bg-[#60b09c] px-5 py-2 text-sm font-medium text-white hover:bg-[#4d9b86]"
             >
               Close
             </button>
@@ -149,7 +139,6 @@ export default function RequestModal({ target, onClose }: Props) {
             onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }}
             className="overflow-y-auto p-6 flex flex-col gap-4"
           >
-            {/* Honeypot */}
             <input
               ref={honeypotRef}
               name="website"
@@ -160,36 +149,24 @@ export default function RequestModal({ target, onClose }: Props) {
             />
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">Your name</label>
-              <input
-                required
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
+              <label className="mb-1 block text-sm font-medium text-white/80">Your Name</label>
+              <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className={inputCls} />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">Your email</label>
-              <input
-                required
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
+              <label className="mb-1 block text-sm font-medium text-white/80">Your Email</label>
+              <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputCls} />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">Industry</label>
+              <label className="mb-1 block text-sm font-medium text-white/80">Industry</label>
               <select
                 required
                 value={industry}
                 onChange={(e) => setIndustry(e.target.value)}
-                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className={inputCls}
               >
-                <option value="">Select industry…</option>
+                <option value="">Select Industry…</option>
                 {INDUSTRIES.map((ind) => (
                   <option key={ind} value={ind}>{ind}</option>
                 ))}
@@ -197,56 +174,51 @@ export default function RequestModal({ target, onClose }: Props) {
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">Role / title</label>
+              <label className="mb-1 block text-sm font-medium text-white/80">Role / Title</label>
               <input
                 required
                 type="text"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 placeholder="e.g. Junior Marketing Manager"
-                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className={inputCls}
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">
-                About you <span className="text-zinc-400">(optional)</span>
+              <label className="mb-1 block text-sm font-medium text-white/80">
+                About You <span className="text-white/30">(optional)</span>
               </label>
               <textarea
                 rows={3}
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="What are you hoping to get out of this mentorship?"
-                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className={inputCls}
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">
-                Profile photo <span className="text-zinc-400">(optional)</span>
+              <label className="mb-1 block text-sm font-medium text-white/80">
+                Profile Photo <span className="text-white/30">(optional)</span>
               </label>
               <div className="flex items-center gap-4">
                 {photoPreview ? (
                   <img src={photoPreview} alt="Preview" className="h-14 w-14 rounded-full object-cover" />
                 ) : (
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-zinc-100 text-zinc-400 text-xs">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white/30 text-xs">
                     No photo
                   </div>
                 )}
-                <label className="cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50">
+                <label className="cursor-pointer rounded-lg border border-white/20 px-3 py-2 text-sm text-white/70 hover:bg-white/5">
                   {photoPreview ? "Change" : "Upload photo"}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePhotoChange}
-                    className="hidden"
-                  />
+                  <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
                 </label>
                 {photoPreview && (
                   <button
                     type="button"
                     onClick={() => { setPhoto(null); setPhotoPreview(null); }}
-                    className="text-sm text-zinc-400 hover:text-zinc-600"
+                    className="text-sm text-white/30 hover:text-white/60"
                   >
                     Remove
                   </button>
@@ -254,7 +226,7 @@ export default function RequestModal({ target, onClose }: Props) {
               </div>
             </div>
 
-            <label className="flex items-start gap-2 text-sm text-zinc-700">
+            <label className="flex items-start gap-2 text-sm text-white/70">
               <input
                 type="checkbox"
                 checked={consent}
@@ -266,23 +238,23 @@ export default function RequestModal({ target, onClose }: Props) {
             </label>
 
             {status === "error" && (
-              <p className="text-sm text-red-600">{errorMsg}</p>
+              <p className="text-sm text-red-400">{errorMsg}</p>
             )}
 
             <div className="flex gap-3 pt-1">
               <button
                 type="button"
                 onClick={handleClose}
-                className="flex-1 rounded-lg border border-zinc-200 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
+                className="flex-1 rounded-lg border border-white/20 py-2 text-sm font-medium text-white/70 hover:bg-white/5"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="flex-1 rounded-lg bg-indigo-600 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60"
+                className="flex-1 rounded-lg bg-[#60b09c] py-2 text-sm font-medium text-white hover:bg-[#4d9b86] disabled:opacity-60"
               >
-                {status === "loading" ? "Sending…" : "Send request"}
+                {status === "loading" ? "Sending…" : "Send Request"}
               </button>
             </div>
           </form>

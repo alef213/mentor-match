@@ -4,6 +4,7 @@ import { useState } from "react";
 import Card, { Profile } from "./Card";
 import Filters, { FilterState } from "./Filters";
 import RequestModal from "./RequestModal";
+import { INDUSTRIES } from "@/lib/constants";
 
 type Props = {
   profiles: Profile[];
@@ -13,7 +14,6 @@ export default function Board({ profiles }: Props) {
   const [filters, setFilters] = useState<FilterState>({ industry: "", type: "all" });
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const industries = Array.from(new Set(profiles.map((p) => p.industry))).sort();
 
   const filtered = profiles.filter((p) => {
     if (filters.industry && p.industry !== filters.industry) return false;
@@ -26,7 +26,7 @@ export default function Board({ profiles }: Props) {
   return (
     <>
       <div className="mb-6">
-        <Filters industries={industries} filters={filters} onChange={setFilters} />
+        <Filters industries={INDUSTRIES} filters={filters} onChange={setFilters} />
       </div>
 
       {filtered.length === 0 ? (
