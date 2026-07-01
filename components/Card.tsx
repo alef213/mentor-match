@@ -8,6 +8,7 @@ export type Profile = {
   industry: string;
   role: string;
   bio: string | null;
+  linkedin: string | null;
   photo: string | null;
   is_active: boolean;
   created_at: string;
@@ -67,6 +68,17 @@ export default function Card({ profile, onRequestMatch }: Props) {
       </div>
 
       {bio && <p className="text-sm leading-relaxed text-white/70">{bio}</p>}
+
+      {profile.linkedin && (
+        <a
+          href={profile.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-[#60b09c] hover:underline"
+        >
+          LinkedIn Profile →
+        </a>
+      )}
 
       <button
         onClick={() => onRequestMatch(profile.id)}

@@ -20,6 +20,7 @@ function toProfile(record: { id: string; createdTime: string; fields: Record<str
     industry: f["Industry"] as string,
     role: f["Role"] as string,
     bio: (f["Bio"] as string) ?? null,
+    linkedin: (f["LinkedIn"] as string) || null,
     photo: (f["Photo"] as string) || null,
     is_active: (f["Active"] as boolean) ?? false,
   };
