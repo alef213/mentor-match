@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col pb-8">
         {children}
         <footer className="fixed bottom-0 left-0 right-0 border-t border-white/10 bg-black/80 backdrop-blur-sm py-2 text-center">
-          <p className="text-xs text-white/20">
+          <p className="text-xs text-white/60">
             Built by{" "}
             <a
               href="https://www.thinklaunchiq.com/"

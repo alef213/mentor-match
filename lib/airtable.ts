@@ -162,6 +162,155 @@ export async function processRemoval(token: string): Promise<{ name: string; ema
   };
 }
 
+export async function getSignupCountsForDates(dates: string[]): Promise<Record<string, number>> {
+  if (dates.length === 0) return {};
+
+  const filter =
+    dates.length === 1
+      ? `{Session ID}="${dates[0]}"`
+      : `OR(${dates.map((d) => `{Session ID}="${d}"`).join(",")})`;
+
+  const params = new URLSearchParams({
+    filterByFormula: `AND(NOT({Status}="declined"),${filter})`,
+  });
+
+  const res = await fetch(
+    `${BASE}/${encodeURIComponent("Session Signups")}?${params}`,
+    { headers: airtableHeaders(), cache: "no-store" }
+  );
+  if (!res.ok) return {};
+
+  const data = await res.json();
+  const counts: Record<string, number> = {};
+  for (const record of data.records ?? []) {
+    const sid = record.fields["Session ID"] as string;
+    if (sid) counts[sid] = (counts[sid] ?? 0) + 1;
+  }
+  return counts;
+}
+
+export async function getSignupCountForDate(date: string): Promise<number> {
+  const params = new URLSearchParams({
+    filterByFormula: `AND({Session ID}="${date}",NOT({Status}="declined"))`,
+  });
+  const res = await fetch(
+    `${BASE}/${encodeURIComponent("Session Signups")}?${params}`,
+    { headers: airtableHeaders() }
+  );
+  if (!res.ok) return 0;
+  const data = await res.json();
+  return (data.records ?? []).length;
+}
+
+export async function createSessionSignup(fields: {
+  sessionId: string;
+  name: string;
+  email: string;
+  confirmToken: string;
+}): Promise<void> {
+  const res = await fetch(`${BASE}/${encodeURIComponent("Session Signups")}`, {
+    method: "POST",
+    headers: airtableHeaders(),
+    body: JSON.stringify({
+      fields: {
+        "Session ID": fields.sessionId,
+        Name: fields.name,
+        Email: fields.email,
+        Status: "pending_confirm",
+        "Confirm Token": fields.confirmToken,
+      },
+    }),
+  });
+  if (!res.ok) throw new Error(await res.text());
+}
+
+export async function confirmSessionEmail(token: string): Promise<{
+  id: string;
+  name: string;
+  email: string;
+  sessionId: string;
+  approveToken: string;
+} | null> {
+  const params = new URLSearchParams({
+    filterByFormula: `{Confirm Token}="${token}"`,
+    maxRecords: "1",
+  });
+  const res = await fetch(
+    `${BASE}/${encodeURIComponent("Session Signups")}?${params}`,
+    { headers: airtableHeaders() }
+  );
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (!data.records?.length) return null;
+
+  const record = data.records[0];
+  const approveToken = crypto.randomUUID();
+
+  const patch = await fetch(
+    `${BASE}/${encodeURIComponent("Session Signups")}/${record.id}`,
+    {
+      method: "PATCH",
+      headers: airtableHeaders(),
+      body: JSON.stringify({
+        fields: {
+          Status: "pending_approval",
+          "Confirm Token": "",
+          "Approve Token": approveToken,
+        },
+      }),
+    }
+  );
+  if (!patch.ok) return null;
+
+  return {
+    id: record.id,
+    name: record.fields["Name"] as string,
+    email: record.fields["Email"] as string,
+    sessionId: record.fields["Session ID"] as string,
+    approveToken,
+  };
+}
+
+export async function approveSessionSignup(
+  approveToken: string,
+  action: "approve" | "decline"
+): Promise<{ name: string; email: string; sessionId: string } | null> {
+  const params = new URLSearchParams({
+    filterByFormula: `{Approve Token}="${approveToken}"`,
+    maxRecords: "1",
+  });
+  const res = await fetch(
+    `${BASE}/${encodeURIComponent("Session Signups")}?${params}`,
+    { headers: airtableHeaders() }
+  );
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (!data.records?.length) return null;
+
+  const record = data.records[0];
+
+  const patch = await fetch(
+    `${BASE}/${encodeURIComponent("Session Signups")}/${record.id}`,
+    {
+      method: "PATCH",
+      headers: airtableHeaders(),
+      body: JSON.stringify({
+        fields: {
+          Status: action === "approve" ? "approved" : "declined",
+          "Approve Token": "",
+        },
+      }),
+    }
+  );
+  if (!patch.ok) return null;
+
+  return {
+    name: record.fields["Name"] as string,
+    email: record.fields["Email"] as string,
+    sessionId: record.fields["Session ID"] as string,
+  };
+}
+
 export async function createMatchRequest(fields: {
   target_id: string;
   requester_name: string;

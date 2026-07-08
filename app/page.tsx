@@ -36,12 +36,20 @@ export default async function Home() {
             <h1 className="text-xl font-bold text-white">Venture Cafe Phoenix Mentorship Network</h1>
             <p className="text-sm text-[#60b09c]">Find Your Mentor Or Mentee</p>
           </div>
-          <Link
-            href="/signup"
-            className="rounded-lg bg-[#60b09c] px-4 py-2 text-sm font-medium text-white hover:bg-[#4d9b86]"
-          >
-            Join the Network
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/calendar"
+              className="rounded-lg border border-[#60b09c] px-4 py-2 text-sm font-medium text-[#60b09c] hover:bg-[#60b09c]/10 transition-colors"
+            >
+              Sessions
+            </Link>
+            <Link
+              href="/signup"
+              className="rounded-lg bg-[#60b09c] px-4 py-2 text-sm font-medium text-white hover:bg-[#4d9b86]"
+            >
+              Join the Network
+            </Link>
+          </div>
         </div>
       </header>
 
