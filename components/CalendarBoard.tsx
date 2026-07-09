@@ -56,11 +56,7 @@ export default function CalendarBoard({ sessions }: Props) {
                 )}
               </div>
 
-              {s.notes && (
-                <p className="text-sm text-white/50">{s.notes}</p>
-              )}
-
-              <button
+<button
                 disabled={full}
                 onClick={() => setSelected(s)}
                 className="mt-auto w-full rounded-lg bg-[#60b09c] py-2 text-sm font-medium text-white hover:bg-[#4d9b86] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
