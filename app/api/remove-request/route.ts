@@ -1,4 +1,4 @@
-import { requestRemoval } from "@/lib/airtable";
+﻿import { requestRemoval } from "@/lib/airtable";
 import { resend } from "@/lib/resend";
 
 export async function POST(request: Request) {
@@ -16,10 +16,10 @@ export async function POST(request: Request) {
       const removeLink = `${siteUrl}/remove?token=${token}`;
 
       await resend.emails.send({
-        from: "Venture Cafe Phoenix Mentorship Network <onboarding@resend.dev>",
+        from: "Venture Cafe Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
         to: email,
         subject: "Confirm your removal from Venture Cafe Phoenix Mentorship Network",
-        text: `Hi ${profile.name},\n\nWe received a request to remove your listing from the Venture Cafe Phoenix Mentorship Network board.\n\nIf this was you, click the link below to confirm:\n\n${removeLink}\n\nIf you didn't request this, you can ignore this email — nothing will change.`,
+        text: `Hi ${profile.name},\n\nWe received a request to remove your listing from the Venture Cafe Phoenix Mentorship Network board.\n\nIf this was you, click the link below to confirm:\n\n${removeLink}\n\nIf you didn't request this, you can ignore this email â€” nothing will change.`,
       });
     }
 
