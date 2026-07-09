@@ -117,7 +117,7 @@ export default function SignupForm() {
           </div>
           <p className="text-lg font-semibold text-white">Thanks for submitting!</p>
           <p className="mt-2 text-sm text-white/60">
-            We sent a confirmation email to your inbox — please click the link to verify your address.
+            We sent a confirmation email to your inbox — please click the link to verify your address. If you don&apos;t see it, check your spam folder.
           </p>
           <p className="mt-3 text-sm text-white/40">
             Once you confirm, your profile will be reviewed by our team. As soon as it&apos;s approved it will go live on the board, and we&apos;ll reach out when there&apos;s a match.
