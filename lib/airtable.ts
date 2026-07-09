@@ -162,13 +162,66 @@ export async function processRemoval(token: string): Promise<{ name: string; ema
   };
 }
 
-export async function getSignupCountsForDates(dates: string[]): Promise<Record<string, number>> {
-  if (dates.length === 0) return {};
+export type AirtableSession = {
+  id: string;
+  date: string;
+  time: string;
+  capacity: number;
+  spotsLeft: number;
+};
+
+export async function getSessions(): Promise<AirtableSession[]> {
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+
+  const params = new URLSearchParams();
+  params.set("filterByFormula", `AND({Active}=1,{Date}>="${today}")`);
+  params.set("sort[0][field]", "Date");
+  params.set("sort[0][direction]", "asc");
+
+  const sessionsRes = await fetch(`${BASE}/Sessions?${params}`, {
+    headers: airtableHeaders(),
+    cache: "no-store",
+  });
+  if (!sessionsRes.ok) throw new Error(await sessionsRes.text());
+
+  const sessionsData = await sessionsRes.json();
+  const records: { id: string; fields: Record<string, unknown> }[] = sessionsData.records ?? [];
+  if (records.length === 0) return [];
+
+  const ids = records.map((r) => r.id);
+  const counts = await getSignupCountsForSessions(ids);
+
+  return records.map((r) => {
+    const capacity = (r.fields["Capacity"] as number) ?? 2;
+    return {
+      id: r.id,
+      date: r.fields["Date"] as string,
+      time: (r.fields["Time"] as string) || "4:30 PM - 7:00 PM",
+      capacity,
+      spotsLeft: Math.max(0, capacity - (counts[r.id] ?? 0)),
+    };
+  });
+}
+
+export async function getSessionById(id: string): Promise<{ capacity: number; date: string; time: string } | null> {
+  const res = await fetch(`${BASE}/Sessions/${id}`, { headers: airtableHeaders() });
+  if (!res.ok) return null;
+  const record = await res.json();
+  return {
+    capacity: (record.fields["Capacity"] as number) ?? 2,
+    date: record.fields["Date"] as string,
+    time: (record.fields["Time"] as string) || "4:30 PM - 7:00 PM",
+  };
+}
+
+export async function getSignupCountsForSessions(ids: string[]): Promise<Record<string, number>> {
+  if (ids.length === 0) return {};
 
   const filter =
-    dates.length === 1
-      ? `{Session ID}="${dates[0]}"`
-      : `OR(${dates.map((d) => `{Session ID}="${d}"`).join(",")})`;
+    ids.length === 1
+      ? `{Session ID}="${ids[0]}"`
+      : `OR(${ids.map((id) => `{Session ID}="${id}"`).join(",")})`;
 
   const params = new URLSearchParams({
     filterByFormula: `AND(NOT({Status}="declined"),${filter})`,
@@ -189,9 +242,9 @@ export async function getSignupCountsForDates(dates: string[]): Promise<Record<s
   return counts;
 }
 
-export async function getSignupCountForDate(date: string): Promise<number> {
+export async function getSignupCountForSession(sessionId: string): Promise<number> {
   const params = new URLSearchParams({
-    filterByFormula: `AND({Session ID}="${date}",NOT({Status}="declined"))`,
+    filterByFormula: `AND({Session ID}="${sessionId}",NOT({Status}="declined"))`,
   });
   const res = await fetch(
     `${BASE}/${encodeURIComponent("Session Signups")}?${params}`,
