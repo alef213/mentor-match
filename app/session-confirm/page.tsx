@@ -1,4 +1,4 @@
-﻿import { confirmSessionEmail } from "@/lib/airtable";
+import { confirmSessionEmail } from "@/lib/airtable";
 import { resend } from "@/lib/resend";
 import { SESSION_TIME } from "@/lib/sessions";
 import Link from "next/link";
@@ -47,7 +47,7 @@ function Result({ ok, message }: { ok: boolean; message: string }) {
     <div className="flex min-h-screen items-center justify-center bg-black p-4">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#242424] p-8 text-center shadow-xl">
         <div className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full text-xl ${ok ? "bg-[#60b09c]/20 text-[#60b09c]" : "bg-red-500/20 text-red-400"}`}>
-          {ok ? "âœ“" : "âœ•"}
+          {ok ? "✓" : "✕"}
         </div>
         <p className="text-lg font-semibold text-white">{ok ? "Email confirmed!" : "Something went wrong"}</p>
         <p className="mt-2 text-sm text-white/60">{message}</p>
