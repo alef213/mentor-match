@@ -27,7 +27,7 @@ export default async function SessionApprovePage({
   if (action === "approve") {
     try {
       await resend.emails.send({
-        from: "Venture Cafe Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
+        from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
         to: result.email,
         subject: `You're confirmed for the ${dateFormatted} session`,
         text: `Hi ${result.name},\n\nGreat news - you're confirmed for the mentorship session on ${dateFormatted} at ${SESSION_TIME}.\n\nWe look forward to seeing you there!\n\nThe VCP Mentorship Team`,
@@ -47,7 +47,7 @@ export default async function SessionApprovePage({
 
   try {
     await resend.emails.send({
-      from: "Venture Cafe Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
+      from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
       to: result.email,
       subject: `Update on your session signup for ${dateFormatted}`,
       text: `Hi ${result.name},\n\nUnfortunately, the slot you requested for ${dateFormatted} at ${SESSION_TIME} is no longer available.\n\nPlease visit the sessions page to sign up for another upcoming date - we'd love to have you!\n\n${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/calendar\n\nThe VCP Mentorship Team`,

@@ -21,10 +21,10 @@ export default async function RemovePage({
 
   try {
     await resend.emails.send({
-      from: "Venture Cafe Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
+      from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
       to: "resolutionresourcegroupllc@gmail.com",
       subject: `Removal request: ${profile.name}`,
-      text: `${profile.name} (${profile.email}) has confirmed they want to be removed from the Venture Cafe Phoenix Mentorship Network board.\n\nPlease deactivate their profile.`,
+      text: `${profile.name} (${profile.email}) has confirmed they want to be removed from the RRG Phoenix Mentorship Network board.\n\nPlease deactivate their profile.`,
     });
   } catch {
     // Notification failed but token is already cleared â€” log and continue

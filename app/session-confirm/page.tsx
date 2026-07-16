@@ -30,7 +30,7 @@ export default async function SessionConfirmPage({
 
   try {
     await resend.emails.send({
-      from: "Venture Cafe Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
+      from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
       to: process.env.ADMIN_EMAIL!,
       subject: `Session signup pending approval: ${result.name}`,
       text: `${result.name} (${result.email}) has confirmed their email and is requesting a spot for the session on ${dateFormatted} at ${SESSION_TIME}.\n\nApprove: ${approveUrl}\n\nDecline: ${declineUrl}`,

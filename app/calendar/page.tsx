@@ -17,7 +17,7 @@ export default async function CalendarPage() {
     <div className="min-h-screen bg-[#112148] pb-8">
       <header className="border-b border-[#fdfefe]/10 bg-[#0d1a38]">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-          <span className="text-xl font-bold text-[#fdfefe]">Venture Cafe Phoenix Mentorship Network</span>
+          <span className="text-xl font-bold text-[#fdfefe]">RRG Phoenix Mentorship Network</span>
           <Link href="/" className="text-sm text-[#727272] hover:text-[#fdfefe] transition-colors">
             Back to Board
           </Link>

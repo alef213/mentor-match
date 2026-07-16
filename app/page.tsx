@@ -33,7 +33,7 @@ export default async function Home() {
       <header className="border-b border-[#fdfefe]/10 bg-[#0d1a38]">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <div>
-            <h1 className="text-xl font-bold text-[#fdfefe]">Venture Cafe Phoenix Mentorship Network</h1>
+            <h1 className="text-xl font-bold text-[#fdfefe]">RRG Phoenix Mentorship Network</h1>
             <p className="text-sm text-[#727272]">Find Your Mentor Or Mentee</p>
           </div>
           <div className="flex items-center gap-3">

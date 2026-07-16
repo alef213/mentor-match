@@ -77,7 +77,7 @@ export default function RemoveSection() {
           <a href="https://venturecafephoenix.org/" target="_blank" rel="noopener noreferrer">
             <img
               src="/venturecafe-logo.png"
-              alt="Venture Cafe Phoenix"
+              alt="RRG Phoenix"
               className="h-20 object-contain opacity-80 hover:opacity-100 transition-opacity"
             />
           </a>

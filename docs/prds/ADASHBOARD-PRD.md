@@ -7,7 +7,7 @@
 
 ## 1. Summary
 
-ADashboard is an internal, password-protected admin panel built directly into the Venture Cafe Phoenix Mentorship Network Next.js app. It replaces the current practice of managing profiles, match requests, and sessions by (a) opening Airtable directly and hand-editing records, and (b) clicking one-off secret links embedded in admin notification emails. Airtable remains the data store — ADashboard is a UI layer on top of the existing `lib/airtable.ts` functions, extended with the write operations that are currently missing.
+ADashboard is an internal, password-protected admin panel built directly into the RRG Phoenix Mentorship Network Next.js app. It replaces the current practice of managing profiles, match requests, and sessions by (a) opening Airtable directly and hand-editing records, and (b) clicking one-off secret links embedded in admin notification emails. Airtable remains the data store — ADashboard is a UI layer on top of the existing `lib/airtable.ts` functions, extended with the write operations that are currently missing.
 
 ---
 
@@ -50,7 +50,7 @@ The core problem: Airtable is being used as a database, a worklist, and a UI sim
 
 ## 5. Users
 
-Single user: Ak, acting as the sole admin of the Venture Cafe Phoenix Mentorship Network program. Design should not assume multi-user auth complexity, but shouldn't hard-code a single username either (e.g. a password + role check is fine; don't hardcode "Ak" as a magic string).
+Single user: Ak, acting as the sole admin of the RRG Phoenix Mentorship Network program. Design should not assume multi-user auth complexity, but shouldn't hard-code a single username either (e.g. a password + role check is fine; don't hardcode "Ak" as a magic string).
 
 ---
 

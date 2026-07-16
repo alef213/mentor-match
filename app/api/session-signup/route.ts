@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const confirmUrl = `${siteUrl}/session-confirm?token=${confirmToken}`;
 
     const { error: emailErr } = await resend.emails.send({
-      from: "Venture Cafe Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
+      from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
       to: email,
       subject: `Confirm your sign-up for the ${dateFormatted} session`,
       text: `Hi ${name},\n\nThanks for signing up for the mentorship session on ${dateFormatted} at ${session.time}.\n\nPlease confirm your email by clicking the link below:\n\n${confirmUrl}\n\nIf you didn't sign up for this, you can ignore this email.\n\nThe VCP Mentorship Team`,

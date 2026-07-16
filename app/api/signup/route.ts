@@ -22,15 +22,15 @@ export async function POST(request: Request) {
     const approveLink = `${siteUrl}/approve?id=${id}&secret=${process.env.ADMIN_SECRET}`;
 
     const { error: userEmailErr } = await resend.emails.send({
-      from: "Venture Cafe Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
+      from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
       to: email,
-      subject: "Confirm your Venture Cafe Phoenix Mentorship Network profile",
+      subject: "Confirm your RRG Phoenix Mentorship Network profile",
       text: `Hi ${name},\n\nThanks for signing up! Please confirm your email address to complete your profile:\n\n${confirmLink}\n\nThis link can only be used once.`,
     });
     if (userEmailErr) throw new Error(`Confirmation email failed: ${userEmailErr.message}`);
 
     const { error: adminEmailErr } = await resend.emails.send({
-      from: "Venture Cafe Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
+      from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
       to: process.env.ADMIN_EMAIL!,
       subject: `New ${type} awaiting approval: ${name}`,
       text: `Name: ${name}\nEmail: ${email}\nType: ${type}\nIndustry: ${industry}\nRole: ${role}\nBio: ${bio || "—"}\n\nApprove this profile:\n${approveLink}`,

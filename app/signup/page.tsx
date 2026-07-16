@@ -12,7 +12,7 @@ export default function SignupPage() {
       </Link>
       <header className="border-b border-[#fdfefe]/10 bg-[#0d1a38]">
         <div className="mx-auto flex max-w-5xl items-center px-4 py-4">
-          <span className="text-xl font-bold text-[#fdfefe]">Venture Cafe Phoenix Mentorship Network</span>
+          <span className="text-xl font-bold text-[#fdfefe]">RRG Phoenix Mentorship Network</span>
         </div>
       </header>
 
