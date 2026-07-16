@@ -24,20 +24,20 @@ const STEPS = [
 export default function HowItWorks() {
   return (
     <div className="mb-10">
-      <h2 className="mb-6 text-center text-sm font-semibold uppercase tracking-widest text-[#e4801c]">
+      <h2 className="mb-6 text-center text-sm font-semibold uppercase tracking-widest text-[#fdfefe]">
         How It Works
       </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {STEPS.map((step) => (
           <div
             key={step.number}
-            className="flex flex-col items-center rounded-2xl border border-white/10 bg-[#242424] px-5 py-6 text-center"
+            className="flex flex-col items-center rounded-2xl border border-[#fdfefe]/10 bg-[#0d1a38] px-5 py-6 text-center"
           >
-            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#60b09c]/20 text-sm font-bold text-[#60b09c]">
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#fdfefe]/10 text-sm font-bold text-[#fdfefe]">
               {step.number}
             </div>
-            <p className="mb-2 text-sm font-semibold text-white">{step.title}</p>
-            <p className="text-xs leading-relaxed text-white/50">{step.description}</p>
+            <p className="mb-2 text-sm font-semibold text-[#fdfefe]">{step.title}</p>
+            <p className="text-xs leading-relaxed text-[#727272]">{step.description}</p>
           </div>
         ))}
       </div>

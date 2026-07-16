@@ -29,14 +29,14 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col pb-8">
         {children}
-        <footer className="fixed bottom-0 left-0 right-0 border-t border-white/10 bg-black/80 backdrop-blur-sm py-2 text-center">
-          <p className="text-xs text-white/60">
+        <footer className="fixed bottom-0 left-0 right-0 border-t border-[#fdfefe]/10 bg-[#112148]/90 backdrop-blur-sm py-2 text-center">
+          <p className="text-xs text-[#fdfefe]/60">
             Built by{" "}
             <a
               href="https://www.thinklaunchiq.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#e4801c] hover:text-[#c96d15] transition-colors"
+              className="text-[#fdfefe] hover:text-[#e0e4f0] transition-colors"
             >
               ThinkLaunchIQ
             </a>
@@ -45,7 +45,7 @@ export default function RootLayout({
               href="https://resolutionresourcegroup.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#e4801c] hover:text-[#c96d15] transition-colors"
+              className="text-[#fdfefe] hover:text-[#e0e4f0] transition-colors"
             >
               Resolution Resource Group
             </a>

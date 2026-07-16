@@ -5,7 +5,7 @@ import { INDUSTRIES } from "@/lib/constants";
 
 type Tab = "mentee" | "mentor";
 
-const inputCls = "w-full rounded-lg border border-white/20 bg-black px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#60b09c]";
+const inputCls = "w-full rounded-lg border border-[#fdfefe]/20 bg-[#112148] px-3 py-2 text-sm text-[#fdfefe] placeholder:text-[#727272] focus:outline-none focus:ring-2 focus:ring-[#727272]";
 
 export default function SignupForm() {
   const [tab, setTab] = useState<Tab>("mentee");
@@ -23,17 +23,9 @@ export default function SignupForm() {
   const honeypotRef = useRef<HTMLInputElement>(null);
 
   function reset() {
-    setName("");
-    setEmail("");
-    setIndustry("");
-    setRole("");
-    setBio("");
-    setLinkedin("");
-    setConsent(false);
-    setPhoto(null);
-    setPhotoPreview(null);
-    setStatus("idle");
-    setErrorMsg("");
+    setName(""); setEmail(""); setIndustry(""); setRole(""); setBio("");
+    setLinkedin(""); setConsent(false); setPhoto(null); setPhotoPreview(null);
+    setStatus("idle"); setErrorMsg("");
   }
 
   function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -68,18 +60,7 @@ export default function SignupForm() {
     const res = await fetch("/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: tab,
-        name,
-        email,
-        industry,
-        role,
-        bio,
-        linkedin,
-        photo: photoUrl,
-        consent,
-        honeypot: honeypotRef.current?.value ?? "",
-      }),
+      body: JSON.stringify({ type: tab, name, email, industry, role, bio, linkedin, photo: photoUrl, consent, honeypot: honeypotRef.current?.value ?? "" }),
     });
 
     const data = await res.json();
@@ -92,17 +73,16 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#242424] p-6">
-      {/* Tabs */}
-      <div className="mb-6 flex rounded-xl bg-black p-1">
+    <div className="w-full max-w-lg rounded-2xl border border-[#fdfefe]/10 bg-[#0d1a38] p-6">
+      <div className="mb-6 flex rounded-xl bg-[#112148] p-1">
         {(["mentee", "mentor"] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => { setTab(t); reset(); }}
             className={`flex-1 rounded-lg py-2 text-sm font-medium transition-colors ${
               tab === t
-                ? "bg-[#60b09c] text-white shadow-sm"
-                : "text-white/50 hover:text-white/80"
+                ? "bg-[#fdfefe] text-[#112148] shadow-sm"
+                : "text-[#727272] hover:text-[#fdfefe]"
             }`}
           >
             {t === "mentee" ? "I want a Mentor" : "I am a Mentor"}
@@ -112,46 +92,34 @@ export default function SignupForm() {
 
       {status === "success" ? (
         <div className="py-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#60b09c]/20 text-[#60b09c] text-xl">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#fdfefe]/10 text-[#fdfefe] text-xl">
             ✓
           </div>
-          <p className="text-lg font-semibold text-white">Thanks for submitting!</p>
-          <p className="mt-2 text-sm text-white/60">
+          <p className="text-lg font-semibold text-[#fdfefe]">Thanks for submitting!</p>
+          <p className="mt-2 text-sm text-[#727272]">
             We sent a confirmation email to your inbox — please click the link to verify your address. If you don&apos;t see it, check your spam folder.
           </p>
-          <p className="mt-3 text-sm text-white/40">
+          <p className="mt-3 text-sm text-[#727272]/70">
             Once you confirm, your profile will be reviewed by our team. As soon as it&apos;s approved it will go live on the board, and we&apos;ll reach out when there&apos;s a match.
           </p>
         </div>
       ) : (
         <form onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }} className="flex flex-col gap-4">
-          <input
-            ref={honeypotRef}
-            name="website"
-            type="text"
-            tabIndex={-1}
-            autoComplete="off"
-            style={{ position: "absolute", left: "-9999px", opacity: 0 }}
-          />
+          <input ref={honeypotRef} name="website" type="text" tabIndex={-1} autoComplete="off" style={{ position: "absolute", left: "-9999px", opacity: 0 }} />
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/80">Name</label>
+            <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Name</label>
             <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/80">Email</label>
+            <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Email</label>
             <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/80">Industry</label>
-            <select
-              required
-              value={industry}
-              onChange={(e) => setIndustry(e.target.value)}
-              className={inputCls}
-            >
+            <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Industry</label>
+            <select required value={industry} onChange={(e) => setIndustry(e.target.value)} className={inputCls}>
               <option value="">Select industry…</option>
               {INDUSTRIES.map((ind) => (
                 <option key={ind} value={ind}>{ind}</option>
@@ -160,97 +128,65 @@ export default function SignupForm() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/80">Role / Title</label>
-            <input
-              required
-              type="text"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              placeholder="e.g. Senior Product Manager"
-              className={inputCls}
-            />
+            <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Role / Title</label>
+            <input required type="text" value={role} onChange={(e) => setRole(e.target.value)} placeholder="e.g. Senior Product Manager" className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/80">Bio</label>
+            <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Bio</label>
             <textarea
-              required
-              rows={3}
-              maxLength={280}
-              value={bio}
+              required rows={3} maxLength={280} value={bio}
               onChange={(e) => setBio(e.target.value)}
-              placeholder={
-                tab === "mentor"
-                  ? "What can you help with? Any specialties?"
-                  : "What are you looking for in a mentor?"
-              }
+              placeholder={tab === "mentor" ? "What can you help with? Any specialties?" : "What are you looking for in a mentor?"}
               className={inputCls}
             />
-            <p className={`mt-1 text-right text-xs ${bio.length >= 260 ? "text-[#60b09c]" : "text-white/30"}`}>
+            <p className={`mt-1 text-right text-xs ${bio.length >= 260 ? "text-[#fdfefe]" : "text-[#727272]"}`}>
               {bio.length}/280
             </p>
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/80">
-              LinkedIn <span className="text-white/30">(optional)</span>
+            <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">
+              LinkedIn <span className="text-[#727272]">(optional)</span>
             </label>
-            <input
-              type="url"
-              value={linkedin}
-              onChange={(e) => setLinkedin(e.target.value)}
-              placeholder="https://linkedin.com/in/yourname"
-              className={inputCls}
-            />
+            <input type="url" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} placeholder="https://linkedin.com/in/yourname" className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/80">
-              Profile Photo <span className="text-white/30">(optional)</span>
+            <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">
+              Profile Photo <span className="text-[#727272]">(optional)</span>
             </label>
             <div className="flex items-center gap-4">
               {photoPreview ? (
                 <img src={photoPreview} alt="Preview" className="h-14 w-14 rounded-full object-cover" />
               ) : (
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white/30 text-xs">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#fdfefe]/10 text-[#727272] text-xs">
                   No photo
                 </div>
               )}
-              <label className="cursor-pointer rounded-lg border border-white/20 px-3 py-2 text-sm text-white/70 hover:bg-white/5">
+              <label className="cursor-pointer rounded-lg border border-[#fdfefe]/20 px-3 py-2 text-sm text-[#727272] hover:text-[#fdfefe] hover:bg-[#fdfefe]/5">
                 {photoPreview ? "Change" : "Upload photo"}
                 <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
               </label>
               {photoPreview && (
-                <button
-                  type="button"
-                  onClick={() => { setPhoto(null); setPhotoPreview(null); }}
-                  className="text-sm text-white/30 hover:text-white/60"
-                >
+                <button type="button" onClick={() => { setPhoto(null); setPhotoPreview(null); }} className="text-sm text-[#727272] hover:text-[#fdfefe]">
                   Remove
                 </button>
               )}
             </div>
           </div>
 
-          <label className="flex items-start gap-2 text-sm text-white/70">
-            <input
-              type="checkbox"
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-              className="mt-0.5"
-              required
-            />
+          <label className="flex items-start gap-2 text-sm text-[#727272]">
+            <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5" required />
             I agree to be contacted for mentorship purposes
           </label>
 
-          {status === "error" && (
-            <p className="text-sm text-red-400">{errorMsg}</p>
-          )}
+          {status === "error" && <p className="text-sm text-red-400">{errorMsg}</p>}
 
           <button
             type="submit"
             disabled={status === "loading"}
-            className="rounded-lg bg-[#60b09c] py-2.5 text-sm font-medium text-white hover:bg-[#4d9b86] disabled:opacity-60"
+            className="rounded-lg bg-[#fdfefe] py-2.5 text-sm font-medium text-[#112148] hover:bg-[#e0e4f0] disabled:opacity-60"
           >
             {status === "loading" ? "Submitting…" : "Join the Network"}
           </button>

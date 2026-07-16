@@ -9,7 +9,7 @@ type Props = {
   onClose: () => void;
 };
 
-const inputCls = "w-full rounded-lg border border-white/20 bg-black px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#60b09c]";
+const inputCls = "w-full rounded-lg border border-white/20 bg-[#112148] px-3 py-2 text-sm text-[#fdfefe] placeholder:text-[#727272] focus:outline-none focus:ring-2 focus:ring-[#727272]";
 
 export default function RequestModal({ target, onClose }: Props) {
   const [name, setName] = useState("");
@@ -96,21 +96,21 @@ export default function RequestModal({ target, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#112148]/80 p-4"
       onClick={(e) => e.target === e.currentTarget && handleClose()}
     >
-      <div className="w-full max-w-lg rounded-2xl bg-[#242424] border border-white/10 shadow-xl flex flex-col max-h-[90vh]">
+      <div className="w-full max-w-lg rounded-2xl bg-[#0d1a38] border border-[#fdfefe]/10 shadow-xl flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="flex items-start justify-between p-6 pb-4 border-b border-white/10">
           <div>
-            <h2 className="text-lg font-semibold text-white">Request a match</h2>
-            <p className="text-sm text-white/60">
-              Connecting with <span className="font-medium text-white">{target.name}</span> ({target.type})
+            <h2 className="text-lg font-semibold text-[#fdfefe]">Request a match</h2>
+            <p className="text-sm text-[#727272]">
+              Connecting with <span className="font-medium text-[#fdfefe]">{target.name}</span> ({target.type})
             </p>
           </div>
           <button
             onClick={handleClose}
-            className="ml-4 text-white/40 hover:text-white"
+            className="ml-4 text-[#727272] hover:text-[#fdfefe]"
             aria-label="Close"
           >
             ✕
@@ -120,16 +120,16 @@ export default function RequestModal({ target, onClose }: Props) {
         {/* Body */}
         {status === "success" ? (
           <div className="py-10 px-6 text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#60b09c]/20 text-[#60b09c] text-xl">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#fdfefe]/10 text-[#fdfefe] text-xl">
               ✓
             </div>
-            <p className="text-lg font-semibold text-white">Request received!</p>
-            <p className="mt-2 text-sm text-white/60">
+            <p className="text-lg font-semibold text-[#fdfefe]">Request received!</p>
+            <p className="mt-2 text-sm text-[#727272]">
               We&apos;ve sent a confirmation to your email. Our team will review your request and be in touch within 7 days to make the introduction.
             </p>
             <button
               onClick={handleClose}
-              className="mt-6 rounded-lg bg-[#60b09c] px-5 py-2 text-sm font-medium text-white hover:bg-[#4d9b86]"
+              className="mt-6 rounded-lg bg-[#fdfefe] px-5 py-2 text-sm font-medium text-[#112148] hover:bg-[#e0e4f0]"
             >
               Close
             </button>
@@ -149,17 +149,17 @@ export default function RequestModal({ target, onClose }: Props) {
             />
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-white/80">Your Name</label>
+              <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Your Name</label>
               <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className={inputCls} />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-white/80">Your Email</label>
+              <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Your Email</label>
               <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputCls} />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-white/80">Industry</label>
+              <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Industry</label>
               <select
                 required
                 value={industry}
@@ -174,7 +174,7 @@ export default function RequestModal({ target, onClose }: Props) {
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-white/80">Role / Title</label>
+              <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">Role / Title</label>
               <input
                 required
                 type="text"
@@ -186,8 +186,8 @@ export default function RequestModal({ target, onClose }: Props) {
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-white/80">
-                About You <span className="text-white/30">(optional)</span>
+              <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">
+                About You <span className="text-[#727272]">(optional)</span>
               </label>
               <textarea
                 rows={3}
@@ -199,18 +199,18 @@ export default function RequestModal({ target, onClose }: Props) {
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-white/80">
-                Profile Photo <span className="text-white/30">(optional)</span>
+              <label className="mb-1 block text-sm font-medium text-[#fdfefe]/80">
+                Profile Photo <span className="text-[#727272]">(optional)</span>
               </label>
               <div className="flex items-center gap-4">
                 {photoPreview ? (
                   <img src={photoPreview} alt="Preview" className="h-14 w-14 rounded-full object-cover" />
                 ) : (
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white/30 text-xs">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#fdfefe]/10 text-[#727272] text-xs">
                     No photo
                   </div>
                 )}
-                <label className="cursor-pointer rounded-lg border border-white/20 px-3 py-2 text-sm text-white/70 hover:bg-white/5">
+                <label className="cursor-pointer rounded-lg border border-white/20 px-3 py-2 text-sm text-[#727272] hover:text-[#fdfefe] hover:bg-[#fdfefe]/5">
                   {photoPreview ? "Change" : "Upload photo"}
                   <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
                 </label>
@@ -218,7 +218,7 @@ export default function RequestModal({ target, onClose }: Props) {
                   <button
                     type="button"
                     onClick={() => { setPhoto(null); setPhotoPreview(null); }}
-                    className="text-sm text-white/30 hover:text-white/60"
+                    className="text-sm text-[#727272] hover:text-[#727272]"
                   >
                     Remove
                   </button>
@@ -226,7 +226,7 @@ export default function RequestModal({ target, onClose }: Props) {
               </div>
             </div>
 
-            <label className="flex items-start gap-2 text-sm text-white/70">
+            <label className="flex items-start gap-2 text-sm text-[#727272]">
               <input
                 type="checkbox"
                 checked={consent}
@@ -245,14 +245,14 @@ export default function RequestModal({ target, onClose }: Props) {
               <button
                 type="button"
                 onClick={handleClose}
-                className="flex-1 rounded-lg border border-white/20 py-2 text-sm font-medium text-white/70 hover:bg-white/5"
+                className="flex-1 rounded-lg border border-white/20 py-2 text-sm font-medium text-[#727272] hover:text-[#fdfefe] hover:bg-[#fdfefe]/5"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="flex-1 rounded-lg bg-[#60b09c] py-2 text-sm font-medium text-white hover:bg-[#4d9b86] disabled:opacity-60"
+                className="flex-1 rounded-lg bg-[#fdfefe] py-2 text-sm font-medium text-[#112148] hover:bg-[#e0e4f0] disabled:opacity-60"
               >
                 {status === "loading" ? "Sending…" : "Send Request"}
               </button>

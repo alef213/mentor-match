@@ -29,23 +29,23 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
-      <header className="border-b border-white/10 bg-[#242424]">
+    <div className="min-h-screen bg-[#112148]">
+      <header className="border-b border-[#fdfefe]/10 bg-[#0d1a38]">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <div>
-            <h1 className="text-xl font-bold text-white">Venture Cafe Phoenix Mentorship Network</h1>
-            <p className="text-sm text-[#60b09c]">Find Your Mentor Or Mentee</p>
+            <h1 className="text-xl font-bold text-[#fdfefe]">Venture Cafe Phoenix Mentorship Network</h1>
+            <p className="text-sm text-[#727272]">Find Your Mentor Or Mentee</p>
           </div>
           <div className="flex items-center gap-3">
             <Link
               href="/calendar"
-              className="rounded-lg border border-[#60b09c] px-4 py-2 text-sm font-medium text-[#60b09c] hover:bg-[#60b09c]/10 transition-colors"
+              className="rounded-lg border border-[#fdfefe]/30 px-4 py-2 text-sm font-medium text-[#fdfefe] hover:bg-[#fdfefe]/10 transition-colors"
             >
               Sessions
             </Link>
             <Link
               href="/signup"
-              className="rounded-lg bg-[#60b09c] px-4 py-2 text-sm font-medium text-white hover:bg-[#4d9b86]"
+              className="rounded-lg bg-[#fdfefe] px-4 py-2 text-sm font-medium text-[#112148] hover:bg-[#e0e4f0] transition-colors"
             >
               Join the Network
             </Link>
@@ -56,10 +56,10 @@ export default async function Home() {
       <main className="mx-auto max-w-5xl px-4 py-10">
         {profiles.length === 0 ? (
           <div className="py-24 text-center">
-            <p className="text-white/60">No profiles yet. Be the first to join!</p>
+            <p className="text-[#727272]">No profiles yet. Be the first to join!</p>
             <Link
               href="/signup"
-              className="mt-4 inline-block rounded-lg bg-[#60b09c] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#4d9b86]"
+              className="mt-4 inline-block rounded-lg bg-[#fdfefe] px-5 py-2.5 text-sm font-medium text-[#112148] hover:bg-[#e0e4f0]"
             >
               Sign up →
             </Link>
