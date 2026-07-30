@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { approveProfile } from "@/lib/airtable";
 
-export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id");

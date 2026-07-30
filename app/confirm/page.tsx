@@ -1,6 +1,19 @@
+import { Suspense } from "react";
 import { confirmEmail } from "@/lib/airtable";
 
-export default async function ConfirmPage({
+export default function ConfirmPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ token?: string }>;
+}) {
+  return (
+    <Suspense fallback={<Shell />}>
+      <ConfirmContent searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function ConfirmContent({
   searchParams,
 }: {
   searchParams: Promise<{ token?: string }>;
@@ -37,6 +50,16 @@ export default async function ConfirmPage({
             </p>
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+function Shell() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 p-4">
+      <div className="w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 text-center shadow-sm">
+        <p className="text-sm text-zinc-500">Processing…</p>
       </div>
     </div>
   );

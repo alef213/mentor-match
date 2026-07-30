@@ -1,9 +1,22 @@
+import { Suspense } from "react";
 import { approveSessionSignup } from "@/lib/airtable";
 import { resend } from "@/lib/resend";
 import { SESSION_TIME } from "@/lib/sessions";
 import Link from "next/link";
 
-export default async function SessionApprovePage({
+export default function SessionApprovePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ token?: string; action?: string }>;
+}) {
+  return (
+    <Suspense fallback={<Shell />}>
+      <SessionApproveContent searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function SessionApproveContent({
   searchParams,
 }: {
   searchParams: Promise<{ token?: string; action?: string }>;
@@ -30,7 +43,7 @@ export default async function SessionApprovePage({
         from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
         to: result.email,
         subject: `You're confirmed for the ${dateFormatted} session`,
-        text: `Hi ${result.name},\n\nGreat news - you're confirmed for the mentorship session on ${dateFormatted} at ${SESSION_TIME}.\n\nWe look forward to seeing you there!\n\nThe VCP Mentorship Team`,
+        text: `Hi ${result.name},\n\nGreat news - you're confirmed for the mentorship session on ${dateFormatted} at ${SESSION_TIME}.\n\nWe look forward to seeing you there!\n\nThe RRG Mentorship Team`,
       });
     } catch {
       // don't fail the page if email fails
@@ -50,7 +63,7 @@ export default async function SessionApprovePage({
       from: "RRG Phoenix Mentorship Network <noreply@globalmentorshipprogram.com>",
       to: result.email,
       subject: `Update on your session signup for ${dateFormatted}`,
-      text: `Hi ${result.name},\n\nUnfortunately, the slot you requested for ${dateFormatted} at ${SESSION_TIME} is no longer available.\n\nPlease visit the sessions page to sign up for another upcoming date - we'd love to have you!\n\n${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/calendar\n\nThe VCP Mentorship Team`,
+      text: `Hi ${result.name},\n\nUnfortunately, the slot you requested for ${dateFormatted} at ${SESSION_TIME} is no longer available.\n\nPlease visit the sessions page to sign up for another upcoming date - we'd love to have you!\n\n${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/calendar\n\nThe RRG Mentorship Team`,
     });
   } catch {
     // don't fail the page if email fails
@@ -67,16 +80,26 @@ export default async function SessionApprovePage({
 
 function Result({ ok, title, message }: { ok: boolean; title: string; message: string }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black p-4">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#242424] p-8 text-center shadow-xl">
-        <div className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full text-xl ${ok ? "bg-[#60b09c]/20 text-[#60b09c]" : "bg-red-500/20 text-red-400"}`}>
+    <div className="flex min-h-screen items-center justify-center bg-[#112148] p-4">
+      <div className="w-full max-w-md rounded-2xl border border-[#fdfefe]/10 bg-[#0d1a38] p-8 text-center shadow-xl">
+        <div className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full text-xl ${ok ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400"}`}>
           {ok ? "✓" : "✕"}
         </div>
-        <p className="text-lg font-semibold text-white">{title}</p>
-        <p className="mt-2 text-sm text-white/60">{message}</p>
-        <Link href="/" className="mt-6 inline-block rounded-lg bg-[#60b09c] px-5 py-2 text-sm font-medium text-white hover:bg-[#4d9b86]">
+        <p className="text-lg font-semibold text-[#fdfefe]">{title}</p>
+        <p className="mt-2 text-sm text-[#727272]">{message}</p>
+        <Link href="/" className="mt-6 inline-block rounded-lg bg-[#fdfefe] px-5 py-2 text-sm font-medium text-[#112148] hover:bg-[#e0e4f0]">
           Back to Board
         </Link>
+      </div>
+    </div>
+  );
+}
+
+function Shell() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#112148] p-4">
+      <div className="w-full max-w-md rounded-2xl border border-[#fdfefe]/10 bg-[#0d1a38] p-8 text-center shadow-xl">
+        <p className="text-sm text-[#727272]">Processing…</p>
       </div>
     </div>
   );

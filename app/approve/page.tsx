@@ -1,6 +1,19 @@
+import { Suspense } from "react";
 import { approveProfile } from "@/lib/airtable";
 
-export default async function ApprovePage({
+export default function ApprovePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ id?: string; secret?: string }>;
+}) {
+  return (
+    <Suspense fallback={<Shell />}>
+      <ApproveContent searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function ApproveContent({
   searchParams,
 }: {
   searchParams: Promise<{ id?: string; secret?: string }>;
@@ -36,6 +49,16 @@ export default async function ApprovePage({
             </p>
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+function Shell() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 p-4">
+      <div className="w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 text-center shadow-sm">
+        <p className="text-sm text-zinc-500">Processing…</p>
       </div>
     </div>
   );

@@ -42,12 +42,16 @@ export async function getActiveProfiles(): Promise<Profile[]> {
   const params = new URLSearchParams({
     filterByFormula: "{Active}=1",
   });
-  const res = await fetch(`${BASE}/Profiles?${params}`, {
-    headers: airtableHeaders(),
-  });
-  if (!res.ok) throw new Error(await res.text());
-  const data = await res.json();
-  return (data.records ?? []).map(toProfile);
+  try {
+    const res = await fetch(`${BASE}/Profiles?${params}`, {
+      headers: airtableHeaders(),
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.records ?? []).map(toProfile);
+  } catch {
+    return [];
+  }
 }
 
 export async function createProfile(fields: {
@@ -175,6 +179,7 @@ export type AirtableSession = {
 export async function getSessions(): Promise<AirtableSession[]> {
   "use cache";
   cacheLife("minutes");
+  try {
   const now = new Date();
   const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
@@ -186,7 +191,7 @@ export async function getSessions(): Promise<AirtableSession[]> {
   const sessionsRes = await fetch(`${BASE}/Sessions?${params}`, {
     headers: airtableHeaders(),
   });
-  if (!sessionsRes.ok) throw new Error(await sessionsRes.text());
+  if (!sessionsRes.ok) return [];
 
   const sessionsData = await sessionsRes.json();
   const records: { id: string; fields: Record<string, unknown> }[] = sessionsData.records ?? [];
@@ -205,6 +210,9 @@ export async function getSessions(): Promise<AirtableSession[]> {
       spotsLeft: Math.max(0, capacity - (counts[r.id] ?? 0)),
     };
   });
+  } catch {
+    return [];
+  }
 }
 
 export async function getSessionById(id: string): Promise<{ capacity: number; date: string; time: string } | null> {

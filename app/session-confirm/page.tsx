@@ -1,9 +1,22 @@
+import { Suspense } from "react";
 import { confirmSessionEmail } from "@/lib/airtable";
 import { resend } from "@/lib/resend";
 import { SESSION_TIME } from "@/lib/sessions";
 import Link from "next/link";
 
-export default async function SessionConfirmPage({
+export default function SessionConfirmPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ token?: string }>;
+}) {
+  return (
+    <Suspense fallback={<Shell />}>
+      <SessionConfirmContent searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function SessionConfirmContent({
   searchParams,
 }: {
   searchParams: Promise<{ token?: string }>;
@@ -44,16 +57,26 @@ export default async function SessionConfirmPage({
 
 function Result({ ok, message }: { ok: boolean; message: string }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black p-4">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#242424] p-8 text-center shadow-xl">
-        <div className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full text-xl ${ok ? "bg-[#60b09c]/20 text-[#60b09c]" : "bg-red-500/20 text-red-400"}`}>
+    <div className="flex min-h-screen items-center justify-center bg-[#112148] p-4">
+      <div className="w-full max-w-md rounded-2xl border border-[#fdfefe]/10 bg-[#0d1a38] p-8 text-center shadow-xl">
+        <div className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full text-xl ${ok ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400"}`}>
           {ok ? "✓" : "✕"}
         </div>
-        <p className="text-lg font-semibold text-white">{ok ? "Email confirmed!" : "Something went wrong"}</p>
-        <p className="mt-2 text-sm text-white/60">{message}</p>
-        <Link href="/" className="mt-6 inline-block rounded-lg bg-[#60b09c] px-5 py-2 text-sm font-medium text-white hover:bg-[#4d9b86]">
+        <p className="text-lg font-semibold text-[#fdfefe]">{ok ? "Email confirmed!" : "Something went wrong"}</p>
+        <p className="mt-2 text-sm text-[#727272]">{message}</p>
+        <Link href="/" className="mt-6 inline-block rounded-lg bg-[#fdfefe] px-5 py-2 text-sm font-medium text-[#112148] hover:bg-[#e0e4f0]">
           Back to Board
         </Link>
+      </div>
+    </div>
+  );
+}
+
+function Shell() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#112148] p-4">
+      <div className="w-full max-w-md rounded-2xl border border-[#fdfefe]/10 bg-[#0d1a38] p-8 text-center shadow-xl">
+        <p className="text-sm text-[#727272]">Processing…</p>
       </div>
     </div>
   );
