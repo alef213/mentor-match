@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import { Profile } from "@/components/Card";
 
 const BASE = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}`;
@@ -36,12 +37,13 @@ async function updateProfile(id: string, fields: Record<string, unknown>): Promi
 }
 
 export async function getActiveProfiles(): Promise<Profile[]> {
+  "use cache";
+  cacheLife("minutes");
   const params = new URLSearchParams({
     filterByFormula: "{Active}=1",
   });
   const res = await fetch(`${BASE}/Profiles?${params}`, {
     headers: airtableHeaders(),
-    cache: "no-store",
   });
   if (!res.ok) throw new Error(await res.text());
   const data = await res.json();
@@ -171,6 +173,8 @@ export type AirtableSession = {
 };
 
 export async function getSessions(): Promise<AirtableSession[]> {
+  "use cache";
+  cacheLife("minutes");
   const now = new Date();
   const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
@@ -181,7 +185,6 @@ export async function getSessions(): Promise<AirtableSession[]> {
 
   const sessionsRes = await fetch(`${BASE}/Sessions?${params}`, {
     headers: airtableHeaders(),
-    cache: "no-store",
   });
   if (!sessionsRes.ok) throw new Error(await sessionsRes.text());
 

@@ -3,8 +3,6 @@ import { getSessions } from "@/lib/airtable";
 import CalendarBoard from "@/components/CalendarBoard";
 import { Session } from "@/components/CalendarBoard";
 
-export const dynamic = "force-dynamic";
-
 export default async function CalendarPage() {
   let sessions: Session[] = [];
   try {
